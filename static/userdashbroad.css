@@ -32,6 +32,14 @@ body
     animation: 3s content none;
 }
 
+.user_box
+{
+    float: right;
+    color:rgb(0, 0, 0);
+    font-size: 20px;
+    padding-right: 10px;
+}
+
 .navbox ul
 {
     margin: 0px;

@@ -9,14 +9,25 @@
 <div class="navbox">
         <nav >
             <ul type="none">
-                <li><a href="">Logout</a></li>
                 <li><a href="">My orders</a></li>
+<!--                <li><form action="/logout" method="post">-->
+<!--                     <button type="submit">Logout</button>-->
+<!--                </form>-->
+<!--                </li>-->
             </ul>
+            <div class="user_box">
+                {% if user %}
+                <ul>
+                  <li>Welcome {{user}}</li>
+                </ul>
+                {% endif %}
+
+            </div>
         </nav>
     </div>
     <div class="right_box">
         <div class="form_box">
-            <form action="/user_Dashbroad" method="post">
+            <form action="user_Dashbroad" method="post">
                 <label> Table No:
                     <input type="text" name="table_no" required>
                 </label>

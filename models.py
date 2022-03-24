@@ -20,6 +20,8 @@ class Customer_login(Base):
     # one to many
     customer_order = relationship("User_Orders", back_populates="order")
 
+    # def __repr__(self):
+    #     return {"Name": self}
 
 class Food_items(Base):
     __tablename__ = "Food_items"
@@ -28,8 +30,7 @@ class Food_items(Base):
     food_items = Column(String(60), nullable=False)
     food_price = Column(Integer, nullable=False)
 
-    # one to many
-    food_items_orders = relationship("User_Orders", back_populates="food_item")
+
 
 
 class User_Orders(Base):
@@ -37,13 +38,13 @@ class User_Orders(Base):
 
     order_Id = Column(Integer, primary_key=True, nullable=False, autoincrement=True)
     user_Id = Column(Integer, ForeignKey('Customer_login.user_Id'), nullable=True)
-    food_Id = Column(Integer, ForeignKey('Food_items.food_Id'), nullable=True)
-    order_date = Column(DATE, nullable=False)
+    food_item = Column(String(120), nullable=True)
+    order_time = Column(String(60), nullable=False)
 
     # one to one
     order = relationship("Customer_login", back_populates="customer_order")
-    # many to one
-    food_item = relationship("Food_items", back_populates="food_items_orders")
+
+
 
 
 class Restaurant_table(Base):

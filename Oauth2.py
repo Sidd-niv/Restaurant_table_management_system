@@ -35,7 +35,6 @@ def verify_user_db(user_ID: int):
 
 def create_access_token(data: dict):
     to_encode = data.copy()
-    print(to_encode)
 
     expire = datetime.utcnow() + timedelta(minutes=ACCESS_TOKEN_EXPIRE_TIME)
     to_encode.update({"exp": expire})
@@ -60,7 +59,7 @@ def verify_access_token(token: str):
 
     except JWTError:
         raise Token_Exception(status_code=status.HTTP_404_NOT_FOUND, detail="Could not validate credentials")
-
+    print(token_data)
     return token_data
 
 
