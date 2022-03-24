@@ -1,0 +1,38 @@
+{% extends "Base.html" %}
+{% block title %} Sign up {% endblock %}
+{% block head %}
+    {{ super() }}
+    <link rel="stylesheet" type="text/css" href="{{url_for('static', path='/Registercss.css')}}">
+{% endblock %}
+{% block content %}
+<body>
+    <div class = "navbox">
+        <nav>
+         <ul type="None">
+             <li><a href="{{ url_for('home')}}"> Home</a></li>
+         </ul>   
+        </nav>
+    </div>
+    <div class="Sign_box">
+        <p><strong>Sign in</strong></p>
+        <form action="/register" method="post">
+            <label>Full Name
+                <input type="text"  name="name" placeholder="Enter full name" required>
+            </label>
+            <label>Email ID
+                <input type="email"  name="email_id" placeholder="Enter Email ID" required>
+            </label>
+            <label>Phone Number
+                <input type="tel"  name="phone" placeholder="xxxx-xxxx-xx" pattern="^\d{10}$" required>
+            </label>
+            <label>Password
+                <input type="password"  name="pwd" placeholder="password" required>
+            </label>
+            <button type="submit">Sign Up</button>
+            <p>Already have an account? <a href="{{ url_for('login_page')}}">
+                <strong>Login</strong>
+            </a></p>
+        </form>
+    </div>
+</body>
+{% endblock %}

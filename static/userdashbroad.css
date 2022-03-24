@@ -1,0 +1,264 @@
+*{
+    margin: 0%;
+    padding: 0%;
+}
+
+
+body
+{
+    padding: 0;
+    margin: 0;
+    background: linear-gradient(-70deg, #f09157 30%, rgba(0, 0, 0, 0) 30%), url('images/nature.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    overflow-x: hidden;
+    height: 100vh;
+
+}
+
+.navbox nav
+{
+    width: 100%;
+    height: 100px;
+    line-height: 80px;
+    color: #A6FFCB;
+    margin: auto;
+    display: flex;
+    box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(1, 17, 102, 0.562) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+    border-radius: 20px;
+    justify-content: space-between;
+    padding: auto;
+    animation: 3s content none;
+}
+
+.navbox ul
+{
+    margin: 0px;
+}
+
+.navbox ul li
+{
+    float: right;
+    padding: 10px 10px 10px 10px;
+    margin: auto ;
+    list-style: none;
+    margin: auto;
+    text-align: center;
+    padding-top: 5px;
+}
+
+.navbox li:hover
+{
+    background-color:rgb(74, 248, 153);
+    color: black;
+    margin-top: 15px;
+    margin-bottom: 20px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    transition: 0.5s all ease;
+    box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(1, 17, 102, 0.562) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+    border-radius: 10px;
+    height: 3rem;
+}
+
+a
+{
+    text-decoration: none;
+    color:rgb(0, 0, 0);
+    font-size: 20px;
+    margin: auto;
+    height: 2rem;
+    transition: 0.5s all ease;
+
+    
+}
+
+
+.left_box
+{
+    float: right;
+    font-family: "Roboto", sans-serif;
+    position: relative;
+    z-index: 1;
+    background: #FFFFFF;
+    opacity: 0.99;
+    max-width: 260px;
+    margin: 100px 100px 100px;
+    background: #A1FFCE;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #FAFFD1, #A1FFCE);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #FAFFD1, #A1FFCE); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    padding-top: 15px;
+    padding-bottom: 15px;
+    padding-left: 15px;
+    padding-right: 55px;
+    text-align: center;
+    box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(1, 17, 102, 0.562) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+    border-radius: 10px;  
+}
+
+
+.content_table
+{
+    border-collapse: collapse;
+    margin: 25px 0 ;
+    font-size: 0.9em;
+    min-width: 400px;
+    border-color: black;
+    
+    
+}
+
+.content_table thead tr
+{
+    background-color: #009879;
+    color: white;
+    text-align: left;
+    font-weight: bold;
+    
+}
+
+.content_table th
+{
+    padding: 12px 15px;
+    border-radius: 10px;
+}
+
+.content_table td
+{
+    padding: 12px 15px;
+    border-radius: 10px;
+    border-bottom: 1px solid rgb(202, 196, 196);
+}
+
+
+.content_table tbody tr:nth-of-type(even)
+{
+    background-color: #f3f3f3;
+}
+
+.content_table tbody tr:last-of-type
+{
+    border-bottom: 45px solid #009879;
+}
+
+
+.right_box
+{
+    float: left;
+    font-family: "Roboto", sans-serif;
+    position: relative;
+    z-index: 1;
+    background: #1FA2FF;  
+    background: -webkit-linear-gradient(to right, #A6FFCB, #12D8FA, #1FA2FF); 
+    background: linear-gradient(to right, #A6FFCB, #12D8FA, #1FA2FF); 
+    opacity: 0.99;
+    max-width: 260px;
+    margin: 100px 100px 100px;
+    padding: 10px 15px 10px 15px;
+    text-align: center;
+    box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(1, 17, 102, 0.562) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+    border-radius: 10px;  
+}
+
+.form_box input
+{
+    outline: 0;
+    border-radius: 10px;
+    background: #f2f2f2;
+    width: 100%;
+    border: 0;
+    margin: 0 0 15px;
+    padding: 15px;
+    box-sizing: border-box;
+    font-size: 14px;
+}
+
+.form_box input:hover
+{
+    background-color: #D3F8F9;
+    transition: all is ease 0s;   
+}
+
+.form_box input:focus
+{
+    
+    background-color: #D3F8F9;
+    transition: all is ease 0s;  
+}
+
+.form_box button
+{
+    text-transform: uppercase;
+    outline: 0;
+    border-radius: 10px;
+    background: #1ADBE5;
+    width: 100%;
+    border: 0;
+    padding: 15px;
+    color: #000000;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.form_box button:hover
+{
+    background-color: #06C5CF;
+    transition: all is ease 0s;
+}
+
+.table_box
+{
+    float: left;
+    font-family: "Roboto", sans-serif;
+    position: relative;
+    background: #fd746c;
+    background: -webkit-linear-gradient(to bottom, #ff9068, #fd746c);  
+    background: linear-gradient(to bottom, #ff9068, #fd746c);
+    max-width: 260px;
+    margin: 100px 100px 100px;
+    padding: 10px 15px 10px 15px;
+    text-align: center;
+    box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(1, 17, 102, 0.562) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+    border-radius: 10px;
+}
+
+.box_t
+{
+    border-collapse: collapse;
+    margin: 25px 0 ;
+    font-size: 0.9em;
+    min-width: 400px;
+    border-color: black;
+    
+    
+}
+
+.box_t thead tr
+{
+    background-color: #92fe9d;
+    color: rgb(7, 6, 6);
+    text-align: left;
+    font-weight: bold;
+    
+}
+
+.box_t th
+{
+    padding: 12px 15px;
+    border-radius: 10px;
+}
+
+.box_t td
+{
+    padding: 12px 15px;
+    border-radius: 10px;
+    border-bottom: 1px solid rgb(202, 196, 196);
+}
+
+
+.box_t tbody tr:nth-of-type(even)
+{
+    background-color: #f3f3f3;
+}
+

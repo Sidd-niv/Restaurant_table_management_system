@@ -1,0 +1,35 @@
+{% extends "Base.html" %}
+{% block title %} Sign in {% endblock %}
+{% block head %}
+    {{ super() }}
+    <link rel="stylesheet" type="text/css" href="{{url_for('static', path='/logincss.css')}}">
+{% endblock %}
+{% block content %}
+<body>
+    <div class = "navbox">
+        <nav>
+         <ul type="None">
+             <li><a href="{{ url_for('home')}}">Home</a></li>
+         </ul>   
+        </nav>
+    </div>
+    <div class="login_box">
+        <p><strong>Login</strong></p>
+        <form action="login" method="post">
+            <label>Email ID
+                <input type="email"  name="email_id" placeholder="User Email ID" required>
+            </label>
+            <label>Password
+                <input type="password"  name="pwd" placeholder="password" required>
+            </label>
+            <button type="submit">login</button>
+            <p>Not registered? <a href="{{ url_for('user_register_page')}}"> Create an account </a><p></p>
+        </form>
+        {% if error %}
+        <div class="login1_box">
+            {{error}}
+        </div>
+        {% endif %}
+    </div>
+</body>
+{% endblock %}

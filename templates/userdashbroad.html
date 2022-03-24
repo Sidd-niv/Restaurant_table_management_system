@@ -1,0 +1,74 @@
+{% extends "Base.html" %}
+{% block title %} Sign in {% endblock %}
+{% block head %}
+    {{ super() }}
+    <link rel="stylesheet" type="text/css" href="{{url_for('static', path='/userdashbroad.css')}}">
+{% endblock %}
+{% block content %}
+<body>
+<div class="navbox">
+        <nav >
+            <ul type="none">
+                <li><a href="">Logout</a></li>
+                <li><a href="">My orders</a></li>
+            </ul>
+        </nav>
+    </div>
+    <div class="right_box">
+        <div class="form_box">
+            <form action="/login/User-Dashbroad" method="post">
+                <label> Table No:
+                    <input type="text" name="table_no" required>
+                </label>
+                <label> Food order
+                    <input type="text" name="item" required>
+                </label>
+                <label> Arrival time
+                    <input type="text" name="user_time" required>
+                </label>
+                <button type="submit">Place Order</button>
+            </form>
+        </div>
+    </div>
+    <div class="left_box">
+       <div class="content_table">
+        <table>
+            <thead>
+                <tr>
+                    <th>Sr.no</th>
+                    <th>Food Item</th>
+                    <th>Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    {% for student in allstudents %}
+                        <td>{{student}}</td>
+                        <td>{{student}}</td>
+                        <td>{{student}}</td>
+                    {% endfor %}
+                </tr>
+            </tbody>
+        </table>
+       </div>
+    </div><br>
+    <div class="table_box">
+        <div class="box_t">
+            <table>
+                <thead>
+                    <tr>
+                        <th>available Tables </th>
+                    </tr>
+                </thead>
+                <tbody>
+                        {% for table in tables %}
+                        <tr>
+                            <td>{{tables}}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+{% endblock %}

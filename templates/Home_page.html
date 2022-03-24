@@ -1,0 +1,34 @@
+{% extends "Base.html" %}
+{% block title %} Home {% endblock %}
+{% block head %}
+    {{ super() }}
+    <link rel="stylesheet" type="text/css" href="{{url_for('static', path='/mastercss.css')}}">
+{% endblock %}
+{% block content %}
+<body>
+    <nav>
+        <div class="logo">
+            <a href="">Hunger Fest</a>
+        </div>
+        <ul type="none">
+            <li><a href="{{ url_for('login_page')}}">Login</a></li>
+            <li><a href="{{ url_for('user_register_page')}}">Sign up</a></li>
+            <li><a href="">Contact</a></li>
+        </ul>
+    </nav>
+    <div class="content">
+        <img src="static/images/pngegg.png" height="300" width="260" class="cooker">
+           <h3><strong>Our Stroy</strong></h3>
+            <h4>
+                <p>Hunger Fest was founded in 2006 by one of our Promoters. We currently own and operate 150 outlets in India, 5 outlets in UAE, 1 outlet
+                in Malaysia and 1 outlet in Oman.Indian cuisine is a natural part of the diet in the markets in which 
+                the Hunger Fest Restaurants operate. We continue to offer new menu options, both vegetarian and non-vegetarian, 
+                largely based on Indian cuisine and use seasonal customer preferences to introduce new dishes. We also run popular food festivals at our Hunger Fest Restaurants,
+                 thereby offering our customers a range of Indian and international cuisines</p>
+             </h4>
+        {% if msg%}
+             {{msg}}
+        {% endif%}
+    </div>
+</body>
+{% endblock %}
