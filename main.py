@@ -71,7 +71,7 @@ def login( response: Response, request: Request,email_id: str = Form(...), pwd: 
 
 
 
-@app.get("/login/User-Dashbroad", status_code=status.HTTP_200_OK)
+@app.get("/user_Dashbroad", status_code=status.HTTP_200_OK)
 def user_Dashbroad(request: Request):
     user_Id = request.cookies.get("access_token")
     try:
@@ -79,6 +79,8 @@ def user_Dashbroad(request: Request):
     except HTTPException:
         return templates.TemplateResponse("login_page.html", context={"request": request, "error": "Please login"})
 
-    return templates.TemplateResponse("login_page.html", context={"request": request, "error": "success"})
+    return templates.TemplateResponse("userdashbroad.html", context={"request": request, "error": "success"})
+
+
 
 
