@@ -23,10 +23,10 @@
                 <input type="password"  name="pwd" placeholder="password" required>
             </label>
             <button type="submit">login</button>
-            <p>Not registered? <a href="{{ url_for('user_register_page')}}"> Create an account </a><p></p>
+            <p>Not registered? <a href="{{ url_for('user_register')}}"> Create an account </a><p></p>
         </form>
         {% if error %}
-        <div class="login1_box">
+        <div >
             {{error}}
         </div>
         {% endif %}

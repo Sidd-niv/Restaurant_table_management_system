@@ -59,7 +59,7 @@ def verify_access_token(token: str):
 
     except JWTError:
         raise Token_Exception(status_code=status.HTTP_404_NOT_FOUND, detail="Could not validate credentials")
-    print(token_data)
+
     return token_data
 
 

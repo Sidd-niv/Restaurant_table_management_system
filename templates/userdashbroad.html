@@ -9,11 +9,20 @@
 <div class="navbox">
         <nav >
             <ul type="none">
-                <li><a href="">My orders</a></li>
-<!--                <li><form action="/logout" method="post">-->
-<!--                     <button type="submit">Logout</button>-->
-<!--                </form>-->
-<!--                </li>-->
+                <li>
+                    <div class="form_button1">
+                        <form action="user_logout" method="post">
+                            <button type="submit">Logout</button>
+                       </form>
+                    </div>
+                </li>
+                <li>
+                    <div class="form_button2">
+                        <form action="/myorders" method="post">
+                            <button type="submit">My Orders</button>
+                       </form>
+                    </div>
+                </li>
             </ul>
             <div class="user_box">
                 {% if user %}
@@ -21,26 +30,33 @@
                   <li>Welcome {{user}}</li>
                 </ul>
                 {% endif %}
-
             </div>
         </nav>
-    </div>
-    <div class="right_box">
+</div><br>
+<div class="right_box">
         <div class="form_box">
             <form action="user_Dashbroad" method="post">
                 <label> Table No:
                     <input type="text" name="table_no" required>
                 </label>
-                <label> Food order
-                    <input type="text" name="item" required>
+                <label> Order Description
+                    <input type="text" name="order_desc" required>
+                </label>
+                <label> Number of members
+                    <input type="number" name="member" required>
                 </label>
                 <label> Arrival time
                     <input type="text" name="user_time" required>
                 </label>
                 <button type="submit">Place Order</button>
             </form>
-        </div>
-    </div>
+            {% if error %}
+               <div>
+                 {{error}}
+               </div>
+            {% endif %}
+       </div>
+</div>
     <div class="left_box">
        <div class="content_table">
         <table>
@@ -52,13 +68,13 @@
                 </tr>
             </thead>
             <tbody>
+            {% for food in food_item %}
                 <tr>
-                    {% for student in allstudents %}
-                        <td>{{student}}</td>
-                        <td>{{student}}</td>
-                        <td>{{student}}</td>
-                    {% endfor %}
+                        <td>{{food.food_Id}}</td>
+                        <td>{{food.food_item}}</td>
+                        <td>{{food.food_price}}</td>
                 </tr>
+            {% endfor %}
             </tbody>
         </table>
        </div>
@@ -72,9 +88,9 @@
                     </tr>
                 </thead>
                 <tbody>
-                        {% for table in tables %}
+                        {% for table in table_availiable %}
                         <tr>
-                            <td>{{tables}}</td>
+                            <td>Table no:{{table.table_no_Id}}</td>
                         </tr>
                        {% endfor %}
                 </tbody>

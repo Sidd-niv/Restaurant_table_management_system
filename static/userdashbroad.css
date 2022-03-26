@@ -25,7 +25,8 @@ body
     color: #A6FFCB;
     margin: auto;
     display: flex;
-    box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(1, 17, 102, 0.562) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+    box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(1, 17, 102, 0.562) 0px 7px 13px -3px, 
+                       rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
     border-radius: 20px;
     justify-content: space-between;
     padding: auto;
@@ -93,9 +94,9 @@ a
     opacity: 0.99;
     max-width: 260px;
     margin: 100px 100px 100px;
-    background: #A1FFCE;  /* fallback for old browsers */
-    background: -webkit-linear-gradient(to right, #FAFFD1, #A1FFCE);  /* Chrome 10-25, Safari 5.1-6 */
-    background: linear-gradient(to right, #FAFFD1, #A1FFCE); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    background: #A1FFCE;
+    background: -webkit-linear-gradient(to right, #FAFFD1, #A1FFCE); 
+    background: linear-gradient(to right, #FAFFD1, #A1FFCE);
     padding-top: 15px;
     padding-bottom: 15px;
     padding-left: 15px;
@@ -255,6 +256,7 @@ a
 {
     padding: 12px 15px;
     border-radius: 10px;
+    border-bottom: 1px solid rgb(202, 196, 196);
 }
 
 .box_t td
@@ -269,4 +271,43 @@ a
 {
     background-color: #f3f3f3;
 }
+
+.form_button1 button
+{
+    background: #fe8c00; /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #fe8c00, #f83600); /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #fe8c00, #f83600);
+    border-radius: .5rem;
+    box-sizing: border-box;
+    color: #FFFFFF;
+    display: flex;
+    font-size: 16px;
+    justify-content: center;
+    padding: 1rem 1.75rem;
+    width: 100%;
+    border: 0;
+    cursor: pointer;
+}
+
+.form_button2 button
+{
+    
+    background: #fe8c00; /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #fe8c00, #f83600); /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #fe8c00, #f83600);
+    border-radius: .5rem;
+    box-sizing: border-box;
+    color: #FFFFFF;
+    display: flex;
+    font-size: 16px;
+    justify-content: center;
+    padding: 1rem 1.75rem;
+    width: 100%;
+    border: 0;
+    cursor: pointer;
+    
+    
+}
+
+
 
