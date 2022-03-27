@@ -4,7 +4,7 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 import models
 from database_con import engine
-from routers import users
+from routers import users, adminUser
 app = FastAPI()
 
 templates = Jinja2Templates(directory="templates/")
@@ -19,7 +19,7 @@ def home(request: Request):
 
 
 app.include_router(users.router)
-
+app.include_router(adminUser.router)
 
 
 

@@ -6,12 +6,10 @@
 
 body
 {
-    padding: 0;
-    margin: 0;
-    background: linear-gradient(-70deg, #f09157 30%, rgba(0, 0, 0, 0) 30%), url('images/nature.jpg');
+    background: linear-gradient(-70deg, #f09157 30%, rgba(0, 0, 0, 0) 30%), url('nature.jpg');
     background-position: center;
-    background-repeat: no-repeat;
     background-size: cover;
+    background-repeat: no-repeat;
     overflow-x: hidden;
     height: 100vh;
 

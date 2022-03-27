@@ -2,9 +2,9 @@ body
 {
     padding: 0;
     margin: 0;
-    background: #1FA2FF;  /* fallback for old browsers */
-    background: -webkit-linear-gradient(to right, #A6FFCB, #12D8FA, #1FA2FF);  /* Chrome 10-25, Safari 5.1-6 */ 
-    background: linear-gradient(to right, #A6FFCB, #12D8FA, #1FA2FF); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    background: #ffe259;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #ffa751, #ffe259);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #ffa751, #ffe259); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 
 }
 
@@ -15,9 +15,13 @@ body
     line-height: 80px;
     margin: auto;
     display: flex;
+    background: #FF512F;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #fa5959, #FF512F);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #DD2476, #FF512F); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
     box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(1, 17, 102, 0.562) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
-    border-radius: 20px;
     justify-content: space-between;
+    opacity: 0.9;
+    border-radius: 2px;
     padding: auto;
     animation: 3s content none;
 }
@@ -43,12 +47,15 @@ body
 
     color: black;
     margin-top: 15px;
+    background: #fe8c00; /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #fe8c00, #f83600); /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #fe8c00, #f83600);
     margin-bottom: 20px;
     padding-top: 5px;
     padding-bottom: 5px;
     transition: 0.5s all ease;
     box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(1, 17, 102, 0.562) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
-    border-radius: 10px;
+    border-radius: 5px;
     height: 3rem;
 }
 
@@ -63,7 +70,6 @@ a
 
     
 }
-
 
 
 .login_box p
@@ -98,12 +104,12 @@ a
 {
     background-color: #D3F8F9;
     transition: all is ease 0s; 
-    box-shadow: #AA076B 0px 5px 15px;    
+    box-shadow: rgba(37, 223, 0, 0.35) 0px 5px 15px;  
 }
 
 .login_box input:focus
 {
-    
+    box-shadow: rgba(37, 223, 0, 0.35) 0px 5px 15px;  
     background-color: #D3F8F9;
     transition: all is ease 0s;  
 }
@@ -113,11 +119,12 @@ a
     text-transform: uppercase;
     outline: 0;
     border-radius: 10px;
+    box-shadow: rgba(37, 223, 0, 0.35) 0px 5px 15px;
     background: #1ADBE5;
     width: 100%;
     border: 0;
     padding: 15px;
-    color: #FFFFFF;
+    color: #000000;
     font-size: 14px;
     cursor: pointer;
 }
@@ -140,4 +147,5 @@ a
     padding: 10px 45px 30px 45px;
     text-align: center;
     border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }

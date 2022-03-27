@@ -49,6 +49,10 @@ class Restaurant_table(Base):
     table_no_Id = Column(Integer, primary_key=True, nullable=False)
     user_Id_no = Column(Integer, nullable=True)
 
+class Admin_login(Base):
+    __tablename__ = "Admin_login"
 
+    user_Email_Id = Column(String(60), primary_key=True, nullable=False)
+    user_Password = Column(String(120), nullable=False, )
 
 
