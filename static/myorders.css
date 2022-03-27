@@ -1,0 +1,151 @@
+*
+{
+    margin: 0;
+    padding: 0;
+    outline: 0;
+}
+
+
+.navbox nav
+{
+    width: 100%;
+    height: 100px;
+    line-height: 80px;
+    margin: auto;
+    display: flex;
+    box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(1, 17, 102, 0.562) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+    border-radius: 20px;
+    justify-content: space-between;
+    padding: auto;
+    animation: 3s content none;
+}
+
+.navbox ul
+{
+    margin-left: 20px;
+}
+
+.navbox ul li
+{
+    float: right;
+    padding: 10px 10px 10px 10px;
+    margin: auto ;
+    list-style: none;
+    margin: auto;
+    text-align: center;
+    padding-top: 5px;
+
+}
+
+.navbox li:hover
+{
+
+    color: black;
+    margin-top: 15px;
+    margin-bottom: 20px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    transition: 0.5s all ease;
+    box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(1, 17, 102, 0.562) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+    border-radius: 10px;
+    height: 3rem;
+    background: #c21500;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #ffc500, #c21500);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #ffc500, #c21500); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+ a
+{
+    text-decoration: none;
+    color:rgb(0, 0, 0);
+    font-size: 100%;
+    margin: auto;
+    height: 2rem;
+    transition: 0.5s all ease;
+
+}
+
+
+
+
+
+body
+{
+    padding: 0;
+    margin: 0;
+    background-image:  url('images/orderpage.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    overflow-x: hidden;
+    height: 100vh;
+}
+.container
+{
+    position: relative;
+    z-index: 1;
+    padding-top: 100px;
+
+}
+
+.container table
+{
+    position: relative;
+    z-index: 2;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 67%;
+    height: 20px;
+    border-collapse: collapse;
+    border-spacing: 0;
+    text-align: center;
+    word-spacing: 1px;
+    background-color:white;
+    overflow: hidden;
+    border-radius: 12px 12px 0 0;
+    box-shadow: rgba(3, 102, 214, 0.3) 0px 0px 0px 3px;
+
+
+}
+
+.container th, td{
+    padding: 10px 15px;
+}
+
+.container th
+{
+    padding: 10px 15px;
+    background: #ff9472;
+    color: black;
+    border-bottom: 1px solid rgb(0, 0, 0);
+}
+
+.container td
+{
+    font-family: 'Times New Roman', Times, serif;
+
+}
+
+.container tr:nth-child(odd)
+{
+    background-color: aquamarine;
+    color: black;
+}
+
+.form_button2 button
+{
+    background: #fe8c00; /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #fe8c00, #f83600); /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #fe8c00, #f83600);
+    border-radius: .5rem;
+    box-sizing: border-box;
+    color: #FFFFFF;
+    display: flex;
+    font-size: 16px;
+    justify-content: center;
+    padding: 0.1rem 0.75rem;
+    width: 100%;
+    border: 0;
+    cursor: pointer;
+}

@@ -1,0 +1,51 @@
+{% extends "Base.html" %}
+{% block title %} Home {% endblock %}
+{% block head %}
+    {{ super() }}
+    <link rel="stylesheet" type="text/css" href="{{url_for('static', path='/Adminpanelpagecss.css')}}">
+{% endblock %}
+{% block content %}
+<body>
+     <div class = "navbox">
+          <nav>
+             <ul type="None">
+                 <li><a href="{{ url_for('')}}">Food menu</a></li>
+             </ul>
+          </nav>
+     </div>
+    <div class="container">
+        <table>
+           <thead>
+              <tr>
+                  <th>Customer Name</th>
+                  <th>Table No</th>
+                  <th>Order Descrption</th>
+                  <th>Number of members</th>
+                  <th>Arrival time</th>
+                  <th>Phone number</th>
+                  <th>Billing</th>
+              </tr>
+           </thead>
+           <tbody>
+           {% for name, table, dec, num, arl_time, phone in Customer_data %}
+                <tr>
+                    <td>{{name}}</td>
+                    <td>{{table}}</td>
+                    <td>{{dec}}</td>
+                    <td>{{num}}</td>
+                    <td>{{arl_time}}</td>
+                    <td>{{phone}}</td>
+                   <td>
+                    <div class="form_button2">
+                      <form action="deleteOrder" method="post">
+                        <button type="submit">Make the bill</button>
+                      </form>
+                   </div>
+                   </td>
+                </tr>
+           {% endfor %}
+        </tbody>
+        </table>
+    </div>
+</body>
+{% endblock %}

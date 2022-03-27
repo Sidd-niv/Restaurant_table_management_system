@@ -1,0 +1,45 @@
+{% extends "Base.html" %}
+{% block title %} Home {% endblock %}
+{% block head %}
+    {{ super() }}
+    <link rel="stylesheet" type="text/css" href="{{url_for('static', path='/myorders.css')}}">
+{% endblock %}
+{% block content %}
+<body>
+     <div class = "navbox">
+          <nav>
+             <ul type="None">
+                 <li><a href="{{ url_for('user_Dashbroad')}}">Dashborad</a></li>
+             </ul>
+          </nav>
+     </div>
+    <div class="container">
+        <table>
+           <thead>
+              <tr>
+                  <th>Table No</th>
+                  <th>Order Descrption</th>
+                  <th>Number of members</th>
+                  <th>Arrival time</th>
+                  <th>Delete</th>
+              </tr>
+           </thead>
+           <tbody>
+                <tr>
+                    <td>{{table}}</td>
+                    <td>{{food_item_desc}}</td>
+                    <td>{{person_per_table}}</td>
+                    <td>{{order_time}}</td>
+                   <td>
+                    <div class="form_button2">
+                      <form action="deleteOrder" method="post">
+                        <button type="submit">Delete</button>
+                      </form>
+                   </div>
+                   </td>
+                </tr>
+        </tbody>
+        </table>
+    </div>
+</body>
+{% endblock %}
