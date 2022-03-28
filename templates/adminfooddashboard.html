@@ -1,0 +1,102 @@
+{% extends "Base.html" %}
+{% block title %} Sign in {% endblock %}
+{% block head %}
+    {{ super() }}
+    <link rel="stylesheet" type="text/css" href="{{url_for('static', path='/adminfooddashboardcss.css')}}">
+{% endblock %}
+{% block content %}
+<body>
+<div class="navbox">
+        <nav >
+            <ul type="none">
+                <li>
+                    <div class="form_button1">
+                        <form action="user_logout" method="post">
+                            <button type="submit">Dashboard</button>
+                       </form>
+                    </div>
+                </li>
+                <li>
+                    <div class="form_button1">
+                        <form action="/myorders" method="post">
+                            <button type="submit">My Orders</button>
+                       </form>
+                    </div>
+                </li>
+            </ul>
+            <div class="user_box">
+                {% if user %}
+                <ul>
+                  <li>Welcome {{user}}</li>
+                </ul>
+                {% endif %}
+            </div>
+        </nav>
+</div>
+<div class="right_box">
+   <div class="form_box">
+    <form action="add_food_item" method="post">
+        <label> food Item Name
+            <input type="text" name="food_name" required>
+        </label>
+        <label> Price
+            <input type="number" name="Price" min="0" required>
+        </label>
+        <button type="submit">Add item</button>
+    </form>
+   </div>
+</div>
+<div class="left_box">
+    <div class="content_table">
+     <table>
+         <thead>
+             <tr>
+                 <th>Sr.no</th>
+                 <th>Food Item</th>
+                 <th>Price</th>
+             </tr>
+         </thead>
+         <tbody>
+         {% for food in food_item %}
+             <tr>
+                     <td>{{food.food_Id}}</td>
+                     <td>{{food.food_item}}</td>
+                     <td>{{food.food_price}}</td>
+             </tr>
+         {% endfor %}
+         </tbody>
+     </table>
+    </div>
+ </div>
+ <div class="center_box">
+    <div class="update_box">
+        <form action="/updateitems" method="post">
+            <label> Please provide item ID for updatation
+                <input type="number" name="item_Id" min="0" required>
+            </label>
+            <label> Change Food item name
+               <input type="number" name="item_Id" min="0" required>
+           </label>
+           <label> Change Food item price
+               <input type="number" name="item_Id" min="0" required>
+           </label>
+           <button type="submit">Update</button>
+           {% if update_error %}
+                 <p>{{update_error}}</p>  
+           {% endif %}
+        </form>
+    <!-- </div> -->
+    <!-- <div class="delete_box"> -->
+       <form action="deleteitems" method="post">
+           <label> Please provide item ID for deletion
+               <input type="number" name="item_Id" min="0" required>
+           </label>
+           {% if del_error %}
+                 <p>{{del_error}}</p>  
+           {% endif %}
+          <button type="submit">Delete</button>
+       </form>
+   </div>
+ </div>
+</body>
+{% endblock %}

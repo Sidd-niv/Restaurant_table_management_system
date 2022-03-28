@@ -1,0 +1,54 @@
+{% extends "Base.html" %}
+{% block title %} Sign in {% endblock %}
+{% block head %}
+    {{ super() }}
+    <link rel="stylesheet" type="text/css" href="{{url_for('static', path='/billbashboardcss.css')}}">
+{% endblock %}
+{% block content %}
+<body>
+<div class="navbox">
+        <nav >
+            <ul type="none">
+                <li>
+                    <div class="form_button1">
+                        <form action="admin_dashborad" method="post">
+                            <button type="submit">dashboard</button>
+                       </form>
+                    </div>
+                </li>
+                <li>
+                    <div class="form_button2">
+                        <form action="/myorders" method="post">
+                            <button type="submit">Logout</button>
+                       </form>
+                    </div>
+                </li>
+            </ul>
+            <div class="user_box">
+                {% if user %}
+                <ul>
+                  <li>Welcome {{user}}</li>
+                </ul>
+                {% endif %}
+            </div>
+        </nav>
+</div>
+<div class="login_box">
+    <form action="billing" method="post">
+        <label>order ID
+            <input type="number" name="order_ID" required>
+        </label>
+        <label> food Items
+            <input type="text" name="food" required>
+        </label>
+        <label> Total Amount
+            <input type="text" name="amount" required>
+        </label>
+        <button type="submit">Send Invoice</button>
+        {% if msg %}
+        <p> {{msg}}</p>
+        {% endif %}
+    </form>
+</div>
+</body>
+{% endblock %}
