@@ -32,6 +32,7 @@ def make_pdf(content_of_pdf: list):
     pdf.set_font(family="times", size=16)
     for line in content_of_pdf:
         pdf.cell(0, 10, txt=line, ln=True)
-    pdf.output('Invoice', 'F')
+    pdf.output('Invoice.pdf', 'F')
 
+make_pdf(["nsafnwof", "anfasnhfon"])
 

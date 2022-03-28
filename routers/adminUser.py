@@ -1,5 +1,7 @@
 from fastapi import Request, status, HTTPException, Depends, Response, APIRouter
 from fastapi.responses import HTMLResponse
+from pdf_generator import make_pdf
+from fastapi_mail_config import send_mail
 from sqlalchemy.orm import Session
 import Oauth2
 import Utils
@@ -51,12 +53,12 @@ async def admin_login(request: Request, db: Session = Depends(get_db)):
         # After verification we are creating a JWT token to authorize the user for further user task
         access_token = Oauth2.create_access_token(data={"user_email": user_data.user_Email_Id})
 
-
         Customer_orders = db.query(models.Customer_login.user_Name, models.Restaurant_table.table_no_Id,
-                                         models.User_Orders.food_item_desc, models.User_Orders.person_per_table,
-                                         models.User_Orders.order_time,models.Customer_login.user_phone_number).join(models.User_Orders,
-                                         models.Customer_login.user_Id == models.User_Orders.user_Id).join(models.Restaurant_table,
-                                         models.User_Orders.user_Id == models.Restaurant_table.user_Id_no)
+                                   models.User_Orders.food_item_desc, models.User_Orders.person_per_table,
+                                   models.User_Orders.order_time, models.Customer_login.user_phone_number).join(
+            models.User_Orders,
+            models.Customer_login.user_Id == models.User_Orders.user_Id).join(models.Restaurant_table,
+                                                                              models.User_Orders.user_Id == models.Restaurant_table.user_Id_no)
 
         # returning the result template in response
         response = templates.TemplateResponse("Adminpanelpage.html",
@@ -73,8 +75,156 @@ async def admin_login(request: Request, db: Session = Depends(get_db)):
         return templates.TemplateResponse("Adminpage.html", context={"request": request})
 
 
-def admin_dashborad():
-    pass
+@router.api_route("/admin_dashborad", status_code=status.HTTP_409_CONFLICT, methods=["GET", "POST"])
+async def admin_dashborad(request: Request, db: Session = Depends(get_db)):
+    if request.method == "POST":
+        user_Id = request.cookies.get("access_token")
 
-def admin_logout():
-    pass
+        try:
+            if not user_Id:
+                raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="User not found")
+        except Token_Exception:
+            return templates.TemplateResponse("Adminpage.html", context={"request": request, "error": "please login"})
+
+        try:
+            user_id_no = Oauth2.get_admin_user(user_Id)
+        except Token_Exception:
+            return templates.TemplateResponse("Adminpage.html", context={"request": request, "error": "please login"})
+
+        Customer_orders = db.query(models.Customer_login.user_Name, models.Restaurant_table.table_no_Id,
+                                   models.User_Orders.food_item_desc, models.User_Orders.person_per_table,
+                                   models.User_Orders.order_time, models.Customer_login.user_phone_number).join(
+            models.User_Orders,
+            models.Customer_login.user_Id == models.User_Orders.user_Id).join(models.Restaurant_table,
+                                                                              models.User_Orders.user_Id == models.Restaurant_table.user_Id_no)
+
+        return templates.TemplateResponse("Adminpanelpage.html",
+                                          context={"request": request, "Customer_data": Customer_orders})
+
+
+
+
+
+
+@router.api_route("/billing", status_code=status.HTTP_409_CONFLICT, methods=["GET", "POST"])
+async def billing(request: Request, db: Session = Depends(get_db)):
+    if request.method == "POST":
+        user_Id = request.cookies.get("access_token")
+        try:
+            if not user_Id:
+                raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="User not found")
+        except Token_Exception:
+            return templates.TemplateResponse("Adminpage.html", context={"request": request, "error": "please login"})
+
+        try:
+            user_id_no = Oauth2.get_admin_user(user_Id)
+        except Token_Exception:
+            return templates.TemplateResponse("Adminpage.html", context={"request": request, "error": "please login"})
+
+        form_data = await request.form()
+
+        user_order_Id = form_data.get("order_ID")
+        food_items_placed = form_data.get("food" )
+        amount = form_data.get("amount")
+
+        user_order_data = db.query(models.User_Orders).filter(models.User_Orders.order_Id == user_order_Id).first()
+
+        try:
+            if not user_order_data:
+                raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="User not found")
+        except HTTPException:
+            return templates.TemplateResponse("billdashboard.html", context={"request": request, "msg": "Invalid order_ID"})
+
+        cust_data = db.query(models.Customer_login).filter(models.Customer_login.user_Id == user_order_data.user_Id).first()
+
+        try:
+            if not cust_data:
+                raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="User not found")
+        except HTTPException:
+            return templates.TemplateResponse("billdashboard.html",
+                                              context={"request": request, "msg": "Something went wrong"})
+
+        pdf_content = [
+            f"Name: {cust_data.user_Name}",
+            f"food details: {food_items_placed}",
+            f"Total amount: {amount}",
+            f"We hope you like our buffet system",
+            f"Please visit us again"
+        ]
+
+        make_pdf(pdf_content)
+
+        try:
+            send_mail(cust_data.user_Email_Id)
+        except Exception:
+            return templates.TemplateResponse("billdashboard.html",
+                                              context={"request": request, "msg": "Something went wrong contact developer"})
+
+        db.delete(user_order_data)
+
+        db.commit()
+
+        return templates.TemplateResponse("billdashboard.html",context={"request": request, "msg": "Invoice as been send"})
+
+
+    elif request.method == "GET":
+        user_Id = request.cookies.get("access_token")
+        try:
+            if not user_Id:
+                raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="User not found")
+        except Token_Exception:
+            return templates.TemplateResponse("Adminpage.html", context={"request": request, "error": "please login"})
+
+        try:
+            user_id_no = Oauth2.get_admin_user(user_Id)
+        except Token_Exception:
+            return templates.TemplateResponse("Adminpage.html", context={"request": request, "error": "please login"})
+
+        return templates.TemplateResponse("billdashboard.html", context={"request": request})
+
+    else:
+        return templates.TemplateResponse("Adminpage.html", context={"request": request, "error": "please login"})
+
+
+
+
+
+@router.api_route("/add-food-items", status_code=status.HTTP_409_CONFLICT, methods=["GET", "POST"])
+async def add_food_items(request: Request, db: Session = Depends(get_db)):
+    if request.method == "POST":
+        user_Id = request.cookies.get("access_token")
+        try:
+            if not user_Id:
+                raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="User not found")
+        except Token_Exception:
+            return templates.TemplateResponse("Adminpage.html", context={"request": request, "error": "please login"})
+
+        try:
+            user_id_no = Oauth2.get_admin_user(user_Id)
+        except Token_Exception:
+            return templates.TemplateResponse("Adminpage.html", context={"request": request, "error": "please login"})
+
+        form_data = await request.form()
+        food_name = form_data.get("food_items")
+        food_price = form_data.get("food_price")
+
+        add_food_data = models.Food_items(
+            food_item=food_name,
+            food_price=food_price
+        )
+
+        db.add(add_food_data)
+
+        db.commit()
+
+        db.refresh(add_food_data)
+
+
+@router.get("/test")
+async def test(request: Request):
+    return  templates.TemplateResponse("adminfooddashboard.html", context={"request": request, "error": "please login"})
+
+
+
+# def admin_logout():
+#     pass

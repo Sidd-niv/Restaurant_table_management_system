@@ -6,7 +6,7 @@
 
 body
 {
-    background: linear-gradient(-70deg, #f09157 30%, rgba(0, 0, 0, 0) 30%), url('nature.jpg');
+    background-image: url('images/.jpg');
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
@@ -26,6 +26,7 @@ body
     box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(1, 17, 102, 0.562) 0px 7px 13px -3px, 
                        rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
     border-radius: 20px;
+    background: linear-gradient(-70deg, #f09157 30%, rgba(0, 0, 0, 0) 30%), url('images/nature.jpg');
     justify-content: space-between;
     padding: auto;
     animation: 3s content none;
@@ -55,7 +56,7 @@ body
     padding-top: 5px;
 }
 
-.navbox li:hover
+/* .navbox li:hover
 {
     background-color:rgb(74, 248, 153);
     color: black;
@@ -67,7 +68,7 @@ body
     box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(1, 17, 102, 0.562) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
     border-radius: 10px;
     height: 3rem;
-}
+} */
 
 a
 {
@@ -280,6 +281,7 @@ a
     color: #FFFFFF;
     display: flex;
     font-size: 16px;
+    margin-top: 1rem;
     justify-content: center;
     padding: 1rem 1.75rem;
     width: 100%;
@@ -299,6 +301,7 @@ a
     display: flex;
     font-size: 16px;
     justify-content: center;
+    margin-top: 1rem;
     padding: 1rem 1.75rem;
     width: 100%;
     border: 0;
