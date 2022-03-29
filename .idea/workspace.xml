@@ -4,7 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3d4d9185-5d5b-4603-9f63-9cbdaf8be6a0" name="Changes" comment="Admin module is in implementation phase" />
+    <list default="true" id="3d4d9185-5d5b-4603-9f63-9cbdaf8be6a0" name="Changes" comment="Modules completed">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -51,6 +53,7 @@
       <recent name="D:\FYND Project\Restaurant_table_management_system" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\FYND Project\Restaurant_table_management_system" />
       <recent name="D:\FYND Project\Restaurant_table_management_system\templates" />
       <recent name="D:\FYND Project\Restaurant_table_management_system\static" />
     </key>
@@ -199,7 +202,35 @@
       <option name="project" value="LOCAL" />
       <updated>1648567828718</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="Modules completed">
+      <created>1648568219501</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1648568219501</updated>
+    </task>
+    <task id="LOCAL-00011" summary="Modules completed">
+      <created>1648568639220</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1648568639220</updated>
+    </task>
+    <task id="LOCAL-00012" summary="Modules completed">
+      <created>1648568689129</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1648568689129</updated>
+    </task>
+    <task id="LOCAL-00013" summary="Modules completed">
+      <created>1648580432905</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1648580432906</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -232,6 +263,7 @@
     <MESSAGE value="user Dashbroad api implemented" />
     <MESSAGE value="User module completed" />
     <MESSAGE value="Admin module is in implementation phase" />
-    <option name="LAST_COMMIT_MESSAGE" value="Admin module is in implementation phase" />
+    <MESSAGE value="Modules completed" />
+    <option name="LAST_COMMIT_MESSAGE" value="Modules completed" />
   </component>
 </project>
