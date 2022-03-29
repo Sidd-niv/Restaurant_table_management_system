@@ -1,6 +1,6 @@
 body
 {
-    background: linear-gradient(-70deg, #f09157 30%, rgba(0, 0, 0, 0) 30%), url('nature.jpg');
+    background-image: url(images/myorderImg.jpg);
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
@@ -15,6 +15,7 @@ body
     width: 100%;
     height: 100px;
     line-height: 80px;
+    background: linear-gradient(-70deg, #f09157 30%, rgba(0, 0, 0, 0) 30%);
     color: #A6FFCB;
     margin: auto;
     display: flex;
@@ -183,7 +184,7 @@ a
     color: #FFFFFF;
     display: flex;
     font-size: 16px;
-    margin-top: 2rem;
+    margin-top: 1rem;
     justify-content: center;
     padding: 1rem 1.75rem;
     width: 100%;

@@ -9,7 +9,20 @@
      <div class = "navbox">
           <nav>
              <ul type="None">
-                 <li><a href="">Food menu</a></li>
+                  <li>
+                    <div class="form_button1">
+                        <form action="add_food_items" method="get">
+                            <button type="submit">Add food items</button>
+                       </form>
+                    </div>
+                </li>
+                <li>
+                    <div class="form_button2">
+                        <form action="admin_logout" method="post">
+                            <button type="submit">Logout</button>
+                       </form>
+                    </div>
+                </li>
              </ul>
           </nav>
      </div>
@@ -23,11 +36,12 @@
                   <th>Number of members</th>
                   <th>Arrival time</th>
                   <th>Phone number</th>
+                  <th>Order ID</th>
                   <th>Billing</th>
               </tr>
            </thead>
            <tbody>
-           {% for name, table, dec, num, arl_time, phone in Customer_data %}
+           {% for name, table, dec, num, arl_time, phone, order_id in Customer_data %}
                 <tr>
                     <td>{{name}}</td>
                     <td>{{table}}</td>
@@ -35,6 +49,7 @@
                     <td>{{num}}</td>
                     <td>{{arl_time}}</td>
                     <td>{{phone}}</td>
+                    <td>{{order_id}}</td>
                    <td>
                     <div class="form_button2">
                       <form action="billing" method="get">

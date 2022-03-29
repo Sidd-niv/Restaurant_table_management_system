@@ -5,15 +5,22 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3d4d9185-5d5b-4603-9f63-9cbdaf8be6a0" name="Changes" comment="Admin module is in implementation phase">
-      <change beforePath="$PROJECT_DIR$/fastapi_mail_config.py" beforeDir="false" afterPath="$PROJECT_DIR$/fastapi_mail_config.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pdf_generator.py" beforeDir="false" afterPath="$PROJECT_DIR$/pdf_generator.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/config.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Invoice.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/Invoice.pdf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/logic.py" beforeDir="false" afterPath="$PROJECT_DIR$/logic.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routers/adminUser.py" beforeDir="false" afterPath="$PROJECT_DIR$/routers/adminUser.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routers/users.py" beforeDir="false" afterPath="$PROJECT_DIR$/routers/users.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/static/Adminpanelpagecss.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/Adminpanelpagecss.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/adminpagecss.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/adminpagecss.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/logincss.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/logincss.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/myorders.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/myorders.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/Registercss.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/Registercss.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/adminfooddashboardcss.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/adminfooddashboardcss.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/billbashboardcss.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/billbashboardcss.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/mastercss.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/mastercss.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/static/userdashbroad.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/userdashbroad.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/Adminpage.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/Adminpage.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/Adminpanelpage.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/Adminpanelpage.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/adminfooddashboard.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/adminfooddashboard.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/billdashboard.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/billdashboard.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -187,7 +194,21 @@
       <option name="project" value="LOCAL" />
       <updated>1648418977099</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Admin module is in implementation phase">
+      <created>1648498164395</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1648498164395</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Admin module is in implementation phase">
+      <created>1648498186721</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1648498186721</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -195,7 +216,19 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="origin/main" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
           </value>
         </entry>
       </map>

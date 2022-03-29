@@ -18,25 +18,18 @@
                 </li>
                 <li>
                     <div class="form_button2">
-                        <form action="/myorders" method="post">
+                        <form action="admin_logout" method="post">
                             <button type="submit">Logout</button>
                        </form>
                     </div>
                 </li>
             </ul>
-            <div class="user_box">
-                {% if user %}
-                <ul>
-                  <li>Welcome {{user}}</li>
-                </ul>
-                {% endif %}
-            </div>
         </nav>
 </div>
 <div class="login_box">
     <form action="billing" method="post">
         <label>order ID
-            <input type="number" name="order_ID" required>
+            <input type="number" name="order_ID" min="0" required>
         </label>
         <label> food Items
             <input type="text" name="food" required>

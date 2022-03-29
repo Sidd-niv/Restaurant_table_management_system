@@ -195,11 +195,13 @@ async def user_Dashbroad(response: Response, request: Request, db: Session = Dep
         except HTTPException:
             return templates.TemplateResponse("userdashbroad.html",
                                               context={"request": request, "error": "Table is already booked",
-                                                       "user": user_name.user_Name,
+                                                       "user": user_name,
                                                        "food_item": food_item,
                                                        "table_availiable": table_availiable})
 
         user_table_booking.user_Id_no = user_id_no["id"]
+
+        db.merge(user_table_booking)
 
         db.commit()
 
@@ -332,6 +334,8 @@ def deleteOrder(request: Request, db: Session = Depends(get_db)):
             models.Restaurant_table.user_Id_no == user_id_no["id"]).first()
 
         user_table_booking.user_Id_no = 0
+
+        db.merge(user_table_booking)
 
         db.commit()
 

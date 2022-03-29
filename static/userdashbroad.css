@@ -6,7 +6,7 @@
 
 body
 {
-    background-image: url('images/.jpg');
+    background: linear-gradient(-70deg, #f09157 30%, rgba(0, 0, 0, 0) 30%), url('images/nature.jpg');
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;

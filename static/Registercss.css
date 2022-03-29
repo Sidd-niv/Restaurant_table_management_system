@@ -1,11 +1,11 @@
 body
 {
-    padding: 0;
-    margin: 0;
-    background: #C6FFDD;  /* fallback for old browsers */
-    background: -webkit-linear-gradient(to right, #f7797d, #FBD786, #C6FFDD);  /* Chrome 10-25, Safari 5.1-6 */
-    background: linear-gradient(to right, #f7797d, #FBD786, #C6FFDD); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-
+    background-image:  url('images/adminDash.png');
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    overflow-x: hidden;
+    height: 100vh;
 }
 
 nav
@@ -16,7 +16,7 @@ nav
     margin: auto;
     display: flex;
     box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(1, 17, 102, 0.562) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
-    border-radius: 20px;
+    border-radius: 5px;
     justify-content: space-between;
     padding: auto;
     animation: 3s content none;

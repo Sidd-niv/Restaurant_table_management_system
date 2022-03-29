@@ -18,7 +18,7 @@
     padding: auto;
     animation: 3s content none;
     background-color: rgb(0, 0, 0);
-    opacity: 0.64;
+    opacity: 0.9;
 
 }
 
@@ -39,10 +39,10 @@
 
 }
 
-.navbox li:hover
-{
+/* .navbox li:hover */
+/* { */
 
-    color: black;
+    /* color: black;
     margin-top: 15px;
     margin-bottom: 20px;
     padding-top: 5px;
@@ -52,11 +52,11 @@
     border-radius: 10px;
     height: 3rem;
     opacity: 0.96;
-    background: #536976;  /* fallback for old browsers */
-    background: -webkit-linear-gradient(to right, #292E49, #536976);  /* Chrome 10-25, Safari 5.1-6 */
-    background: linear-gradient(to right, #292E49, #536976); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    background: #536976;  
+    background: -webkit-linear-gradient(to right, #292E49, #536976);  
+    background: linear-gradient(to right, #292E49, #536976);  */
 
-}
+ /* }  */
 
  a
 {
@@ -76,7 +76,7 @@
 
 body
 {
-    background-image: url(images/admin_dash.jpg);
+    background-image: url(images/adminDash.png);
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
@@ -98,6 +98,7 @@ body
     z-index: 2;
     left: 50%;
     top: 50%;
+    margin-top: 50px;
     transform: translate(-50%, -50%);
     width: 67%;
     height: 20px;
@@ -135,6 +136,24 @@ body
     color: black;
 }
 
+.form_button1 button
+{
+    background: #fe8c00; /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #fe8c00, #f83600); /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #fe8c00, #f83600);
+    border-radius: .5rem;
+    box-sizing: border-box;
+    color: #FFFFFF;
+    display: flex;
+    font-size: 16px;
+    margin-top: 1rem;
+    justify-content: center;
+    padding: 1rem 1.75rem;
+    width: 100%;
+    border: 0;
+    cursor: pointer;
+}
+
 .form_button2 button
 {
     background: #fe8c00; /* fallback for old browsers */
@@ -145,8 +164,9 @@ body
     color: #FFFFFF;
     display: flex;
     font-size: 16px;
+    margin-top: 1rem;
     justify-content: center;
-    padding: 0.1rem 0.75rem;
+    padding: 1rem 1.75rem;
     width: 100%;
     border: 0;
     cursor: pointer;

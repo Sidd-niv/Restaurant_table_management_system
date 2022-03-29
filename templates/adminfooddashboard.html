@@ -11,15 +11,15 @@
             <ul type="none">
                 <li>
                     <div class="form_button1">
-                        <form action="user_logout" method="post">
+                        <form action="admin_dashborad" method="post">
                             <button type="submit">Dashboard</button>
                        </form>
                     </div>
                 </li>
                 <li>
                     <div class="form_button1">
-                        <form action="/myorders" method="post">
-                            <button type="submit">My Orders</button>
+                        <form action="admin_logout" method="post">
+                            <button type="submit">Logout</button>
                        </form>
                     </div>
                 </li>
@@ -35,7 +35,7 @@
 </div>
 <div class="right_box">
    <div class="form_box">
-    <form action="add_food_item" method="post">
+    <form action="add_food_items" method="post">
         <label> food Item Name
             <input type="text" name="food_name" required>
         </label>
@@ -61,7 +61,7 @@
              <tr>
                      <td>{{food.food_Id}}</td>
                      <td>{{food.food_item}}</td>
-                     <td>{{food.food_price}}</td>
+                     <td>Rs: {{food.food_price}} /-</td>
              </tr>
          {% endfor %}
          </tbody>
@@ -70,24 +70,22 @@
  </div>
  <div class="center_box">
     <div class="update_box">
-        <form action="/updateitems" method="post">
+        <form action="update_food_items" method="post">
             <label> Please provide item ID for updatation
                 <input type="number" name="item_Id" min="0" required>
             </label>
             <label> Change Food item name
-               <input type="number" name="item_Id" min="0" required>
+               <input type="text" name="item_name" >
            </label>
            <label> Change Food item price
-               <input type="number" name="item_Id" min="0" required>
+               <input type="number" name="item_price" min="0" >
            </label>
            <button type="submit">Update</button>
            {% if update_error %}
                  <p>{{update_error}}</p>  
            {% endif %}
         </form>
-    <!-- </div> -->
-    <!-- <div class="delete_box"> -->
-       <form action="deleteitems" method="post">
+       <form action="delete_food_items" method="post">
            <label> Please provide item ID for deletion
                <input type="number" name="item_Id" min="0" required>
            </label>

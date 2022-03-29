@@ -63,15 +63,19 @@ a
 
 li:hover
 {
-    background-color:cyan;
     color: black;
-    margin-top: 20px;
+    margin-top: 15px;
     margin-bottom: 20px;
     padding-top: 5px;
     padding-bottom: 5px;
     transition: 0.5s all ease;
+    box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(1, 17, 102, 0.562) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
     border-radius: 10px;
     height: 3rem;
+    opacity: 0.96;
+    background: #536976;  
+    background: -webkit-linear-gradient(to right, #292E49, #536976);  
+    background: linear-gradient(to right, #292E49, #536976); 
 }
 
 ul
@@ -157,10 +161,7 @@ ul li
 }
 
 
-.cards{
-    /* width: 20%; */
 
-}
 
 .image
 {
