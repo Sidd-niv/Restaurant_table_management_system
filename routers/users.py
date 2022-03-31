@@ -1,10 +1,10 @@
 from fastapi import Request, status, HTTPException, Depends, Response, APIRouter
 from fastapi.responses import HTMLResponse
 from sqlalchemy.orm import Session
-import Oauth2
-import Utils
+import oauth
+import utils
 import models
-from Oauth2 import Token_Exception
+from oauth import Token_Exception
 from database_con import get_db
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
@@ -28,7 +28,7 @@ async def user_register(request: Request, db: Session = Depends(get_db)):
         email_id = form_data.get("email_id")
         phone = form_data.get("phone")
         pwd = form_data.get("pwd")
-        new_pwd = Utils.get_Hash_pwd(pwd.strip())
+        new_pwd = utils.get_Hash_pwd(pwd.strip())
 
         # verifying the email and phone number wheather it is already in use or not
 
@@ -102,7 +102,7 @@ async def login(response: Response, request: Request, db: Session = Depends(get_
         try:
 
             # If user password doesn't match with user input then rasie a exception and redirect user to login page with a message
-            if not Utils.verify_pwd(pwd.strip(), user_data.user_Password):
+            if not utils.verify_pwd(pwd.strip(), user_data.user_Password):
                 raise HTTPException(status_code=status.HTTP_403_FORBIDDEN)
         except HTTPException:
             return templates.TemplateResponse("login_page.html",
@@ -110,7 +110,7 @@ async def login(response: Response, request: Request, db: Session = Depends(get_
                                               , status_code=status.HTTP_409_CONFLICT)
 
         # After verification we are creating a JWT token to authorize the user for further user task
-        access_token = Oauth2.create_access_token(data={"user_Id": user_data.user_Id})
+        access_token = oauth.create_access_token(data={"user_Id": user_data.user_Id})
 
         # Reading the user name for DB to display on user dashboard
         user_name = user_data.user_Name
@@ -155,7 +155,7 @@ async def user_Dashbroad(response: Response, request: Request, db: Session = Dep
 
         # Verifying the user credentials i.e.. JWT token for authorization
         try:
-            user_id_no = Oauth2.get_current_user(user_Id)
+            user_id_no = oauth.get_current_user(user_Id)
         except Token_Exception:
             return templates.TemplateResponse("login_page.html", context={"request": request, "error": "Please login"})
 
@@ -241,7 +241,7 @@ async def user_Dashbroad(response: Response, request: Request, db: Session = Dep
             return templates.TemplateResponse("login_page.html", context={"request": request, "error": "Please login"})
 
         try:
-            user_id_no = Oauth2.get_current_user(user_Id)
+            user_id_no = oauth.get_current_user(user_Id)
         except Token_Exception:
             return templates.TemplateResponse("login_page.html", context={"request": request, "error": "Please login"})
 
@@ -265,13 +265,12 @@ async def user_Dashbroad(response: Response, request: Request, db: Session = Dep
 
 @router.api_route("/myorders", status_code=status.HTTP_409_CONFLICT,  methods=["GET", "POST"])
 async def myorders(request: Request, db: Session = Depends(get_db)):
-
         if request.method == "POST":
             user_Id = request.cookies.get("access_token")
 
             if user_Id:
                 try:
-                    user_id_no = Oauth2.get_current_user(user_Id)
+                    user_id_no = oauth.get_current_user(user_Id)
                 except Token_Exception:
                     return templates.TemplateResponse("login_page.html",
                                                       context={"request": request, "error": "Please login"})
@@ -312,14 +311,14 @@ async def myorders(request: Request, db: Session = Depends(get_db)):
                                                   context={"request": request, "error": "Please login"})
         else:
             return templates.TemplateResponse("login_page.html",
-                                              context={"request": request, "error": "Please login"})
+                                              context={"request": request, "error": "here wacth"})
 
 @router.post("/deleteOrder", status_code=status.HTTP_200_OK)
 def deleteOrder(request: Request, db: Session = Depends(get_db)):
     user_Id = request.cookies.get("access_token")
     if user_Id:
         try:
-            user_id_no = Oauth2.get_current_user(user_Id)
+            user_id_no = oauth.get_current_user(user_Id)
         except Token_Exception:
             return templates.TemplateResponse("login_page.html",
                                               context={"request": request, "error": "Please login"})

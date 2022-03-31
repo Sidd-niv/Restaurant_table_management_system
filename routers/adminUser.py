@@ -1,22 +1,25 @@
 from fastapi import Request, status, HTTPException, Depends, Response, APIRouter
-from fastapi.responses import HTMLResponse
 from pdf_generator import make_pdf
 from fastapi_mail_config import send_mail
 from sqlalchemy.orm import Session
-import Oauth2
-import Utils
+import oauth
+import utils
 import models
-from Oauth2 import Token_Exception
+from oauth import Token_Exception
 from database_con import get_db
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 
+# APIRouter object to access the application routes
 router = APIRouter(tags=["Admin"])
 
+# templates objects to return the UI page based on requests
 templates = Jinja2Templates(directory="templates/")
 router.mount("/static", StaticFiles(directory="static/"), name="static")
 
-
+# Admin login generic API which accept only to request get and post
+# get request returns admin login html page
+# post request verify the admin credentials and return admin dashboard if it is a valid user
 @router.api_route("/admin_login", status_code=status.HTTP_409_CONFLICT, methods=["GET", "POST"])
 async def admin_login(request: Request, db: Session = Depends(get_db)):
     # If condition to decide the logic based on request
@@ -43,7 +46,7 @@ async def admin_login(request: Request, db: Session = Depends(get_db)):
         try:
 
             # If user password doesn't match with user input then rasie a exception and redirect user to login page with a message
-            if not Utils.verify_pwd(pwd.strip(), user_data.user_Password):
+            if not utils.verify_pwd(pwd.strip(), user_data.user_Password):
                 raise HTTPException(status_code=status.HTTP_403_FORBIDDEN)
         except HTTPException:
             return templates.TemplateResponse("Adminpage.html",
@@ -51,15 +54,14 @@ async def admin_login(request: Request, db: Session = Depends(get_db)):
                                               , status_code=status.HTTP_409_CONFLICT)
 
         # After verification we are creating a JWT token to authorize the user for further user task
-        access_token = Oauth2.create_access_token(data={"user_email": user_data.user_Email_Id})
+        access_token = oauth.create_access_token(data={"user_email": user_data.user_Email_Id})
 
+        # Performing inner join query on multiple table to retrieve user data
         Customer_orders = db.query(models.Customer_login.user_Name, models.Restaurant_table.table_no_Id,
                                    models.User_Orders.food_item_desc, models.User_Orders.person_per_table,
                                    models.User_Orders.order_time, models.Customer_login.user_phone_number,
-                                   models.User_Orders.order_Id).join(
-            models.User_Orders,
-            models.Customer_login.user_Id == models.User_Orders.user_Id).join(models.Restaurant_table,
-                                                                              models.User_Orders.user_Id == models.Restaurant_table.user_Id_no)
+                                   models.User_Orders.order_Id).join(models.User_Orders,models.Customer_login.user_Id == models.User_Orders.user_Id).join(models.Restaurant_table,
+                                   models.User_Orders.user_Id == models.Restaurant_table.user_Id_no)
 
         # returning the result template in response
         response = templates.TemplateResponse("Adminpanelpage.html",
@@ -76,22 +78,31 @@ async def admin_login(request: Request, db: Session = Depends(get_db)):
         return templates.TemplateResponse("Adminpage.html", context={"request": request})
 
 
+# Admin dashboard generic API which accept only to request get and post
+# get request returns admin login html page
+# post request verify the admin credentials and return admin dashboard if it is a valid user
 @router.api_route("/admin_dashborad", status_code=status.HTTP_409_CONFLICT, methods=["GET", "POST"])
 async def admin_dashborad(request: Request, db: Session = Depends(get_db)):
+    # If condition to decide the logic based on request
     if request.method == "POST":
+        # Extracting the data from html form
         user_Id = request.cookies.get("access_token")
 
+        # Checking whether the cookies are none or not
         try:
             if not user_Id:
                 raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="User not found")
         except Token_Exception:
             return templates.TemplateResponse("Adminpage.html", context={"request": request, "error": "please login"})
 
+        # After extracting cookies from client request
+        # Verifying the access token with get_admin_user
         try:
-            user_id_no = Oauth2.get_admin_user(user_Id)
+            user_id_no = oauth.get_admin_user(user_Id)
         except Token_Exception:
             return templates.TemplateResponse("Adminpage.html", context={"request": request, "error": "please login"})
 
+        # Performing inner join query on multiple table to retrieve user data
         Customer_orders = db.query(models.Customer_login.user_Name, models.Restaurant_table.table_no_Id,
                                    models.User_Orders.food_item_desc, models.User_Orders.person_per_table,
                                    models.User_Orders.order_time, models.Customer_login.user_phone_number,
@@ -99,9 +110,12 @@ async def admin_dashborad(request: Request, db: Session = Depends(get_db)):
                                    ).join(models.Restaurant_table,
                                    models.User_Orders.user_Id == models.Restaurant_table.user_Id_no)
 
-
+        # ret
         return templates.TemplateResponse("Adminpanelpage.html",
                                           context={"request": request, "Customer_data": Customer_orders})
+
+    else:
+        return templates.TemplateResponse("Adminpage.html", context={"request": request, "error": "please login"})
 
 
 @router.api_route("/billing", status_code=status.HTTP_409_CONFLICT, methods=["GET", "POST"])
@@ -115,7 +129,7 @@ async def billing(request: Request, db: Session = Depends(get_db)):
             return templates.TemplateResponse("Adminpage.html", context={"request": request, "error": "please login"})
 
         try:
-            user_id_no = Oauth2.get_admin_user(user_Id)
+            user_id_no = oauth.get_admin_user(user_Id)
         except Token_Exception:
             return templates.TemplateResponse("Adminpage.html", context={"request": request, "error": "please login"})
 
@@ -178,7 +192,7 @@ async def billing(request: Request, db: Session = Depends(get_db)):
             return templates.TemplateResponse("Adminpage.html", context={"request": request, "error": "please login"})
 
         try:
-            user_id_no = Oauth2.get_admin_user(user_Id)
+            user_id_no = oauth.get_admin_user(user_Id)
         except Token_Exception:
             return templates.TemplateResponse("Adminpage.html", context={"request": request, "error": "please login"})
 
@@ -199,7 +213,7 @@ async def add_food_items(request: Request, db: Session = Depends(get_db)):
             return templates.TemplateResponse("Adminpage.html", context={"request": request, "error": "please login"})
 
         try:
-            user_id_no = Oauth2.get_admin_user(user_Id)
+            user_id_no = oauth.get_admin_user(user_Id)
         except Token_Exception:
             return templates.TemplateResponse("Adminpage.html", context={"request": request, "error": "please login"})
 
@@ -233,7 +247,7 @@ async def add_food_items(request: Request, db: Session = Depends(get_db)):
             return templates.TemplateResponse("Adminpage.html", context={"request": request, "error": "please login"})
 
         try:
-            user_id_no = Oauth2.get_admin_user(user_Id)
+            user_id_no = oauth.get_admin_user(user_Id)
         except Token_Exception:
             return templates.TemplateResponse("Adminpage.html", context={"request": request, "error": "please login"})
 
@@ -261,7 +275,7 @@ async def update_food_items(request: Request, db: Session = Depends(get_db)):
             return templates.TemplateResponse("Adminpage.html", context={"request": request, "error": "please login"})
 
         try:
-            user_id_no = Oauth2.get_admin_user(user_Id)
+            user_id_no = oauth.get_admin_user(user_Id)
         except Token_Exception:
             return templates.TemplateResponse("Adminpage.html", context={"request": request, "error": "please login"})
 
@@ -341,7 +355,7 @@ async def delete_food_items(request: Request, db: Session = Depends(get_db)):
             return templates.TemplateResponse("Adminpage.html", context={"request": request, "error": "please login"})
 
         try:
-            user_id_no = Oauth2.get_admin_user(user_Id)
+            user_id_no = oauth.get_admin_user(user_Id)
         except Token_Exception:
             return templates.TemplateResponse("Adminpage.html", context={"request": request, "error": "please login"})
 

@@ -6,6 +6,12 @@
   <component name="ChangeListManager">
     <list default="true" id="3d4d9185-5d5b-4603-9f63-9cbdaf8be6a0" name="Changes" comment="Modules completed">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Invoice.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/Invoice.pdf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Oauth2.py" beforeDir="false" afterPath="$PROJECT_DIR$/oauth.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/logic.py" beforeDir="false" afterPath="$PROJECT_DIR$/logic.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routers/adminUser.py" beforeDir="false" afterPath="$PROJECT_DIR$/routers/adminUser.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routers/users.py" beforeDir="false" afterPath="$PROJECT_DIR$/routers/users.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -101,6 +107,27 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="Restaurant_Table_Management_System" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="pdf_generator" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="Restaurant_Table_Management_System" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -125,6 +152,7 @@
     <recent_temporary>
       <list>
         <item itemvalue="Python.logic" />
+        <item itemvalue="Python.main" />
         <item itemvalue="Python.fastapi_mail_config" />
         <item itemvalue="Python.pdf_generator" />
       </list>
@@ -230,7 +258,14 @@
       <option name="project" value="LOCAL" />
       <updated>1648580432906</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="Modules completed">
+      <created>1648581769106</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1648581769107</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
