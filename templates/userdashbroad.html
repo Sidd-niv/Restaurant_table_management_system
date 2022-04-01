@@ -70,9 +70,9 @@
             <tbody>
             {% for food in food_item %}
                 <tr>
-                        <td>{{food.food_Id}}</td>
+                        <td>{{loop.index}}</td>
                         <td>{{food.food_item}}</td>
-                        <td>{{food.food_price}}</td>
+                        <td>Rs.{{food.food_price}} /-</td>
                 </tr>
             {% endfor %}
             </tbody>

@@ -361,6 +361,7 @@ async def delete_food_items(request: Request, db: Session = Depends(get_db)):
 
         form_data = await request.form()
         item_Id = form_data.get("item_Id")
+        print(item_Id)
 
         food_item_data = db.query(models.Food_items).filter(models.Food_items.food_Id == item_Id).first()
 

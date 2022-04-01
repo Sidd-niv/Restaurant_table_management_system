@@ -8,7 +8,7 @@ class Customer_login(Base):
 
     user_Id = Column(Integer, primary_key=True, nullable=False, autoincrement=True)
     user_Name = Column(String(60), nullable=False)
-    user_Email_Id = Column(String(60), primary_key=True, nullable=False)
+    user_Email_Id = Column(String(60), primary_key=False, nullable=False)
     user_Password = Column(String(120), nullable=False,)
     user_phone_number = Column(NUMERIC(10), nullable=False)
     user_type = Column(String(30), nullable=False)
