@@ -1,7 +1,6 @@
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
-import psycopg2
 
 # SQLALCHEMY_DATABASE_URL = "mysql+mysqlconnector://root:Sidd@localhost/Restaurant_Table_Management_System_DB"
 
