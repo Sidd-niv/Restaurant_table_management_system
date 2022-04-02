@@ -1,7 +1,7 @@
 from typing import Optional
 from pydantic import BaseModel, EmailStr
 
-
+#  Pydantic models for schema validation
 class User_Create(BaseModel):
     user_Name: str
     user_Email_Id: EmailStr

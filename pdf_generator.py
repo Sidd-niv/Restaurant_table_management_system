@@ -1,6 +1,6 @@
 from fpdf import FPDF
 
-
+# PDF class to initialize the borders, fonts, styles and image
 class PDF(FPDF):
     def header(self):
         # add logo in pdf
@@ -21,7 +21,9 @@ class PDF(FPDF):
         # set page number
         self.cell(0, 10, "Page no.1", align="C")
 
+# function to generate
 def make_pdf(content_of_pdf: list):
+    # initialing  the pdf page format
     pdf = PDF(orientation="P", format="A4")
     pdf.add_page()  # it will add a page
     pdf.set_line_width(0.0)
@@ -30,9 +32,12 @@ def make_pdf(content_of_pdf: list):
     pdf.line(5.0, 5.0, 5.0, 292.0)  # left one
     pdf.line(205.0, 5.0, 205.0, 292.0)  # right one
     pdf.set_font(family="times", size=16)
+
+    # write operation on pdf file
     for line in content_of_pdf:
         pdf.cell(0, 10, txt=line, ln=True)
+
+    # output file naming
     pdf.output('Invoice.pdf', 'F')
 
-make_pdf(["nsafnwof", "anfasnhfon"])
 

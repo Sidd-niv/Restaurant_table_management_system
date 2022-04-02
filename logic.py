@@ -1,3 +1,5 @@
+import secrets
+
 from database_con import SessionLocal
 import models
 from passlib.context import CryptContext
@@ -21,9 +23,12 @@ db = SessionLocal()
 
 # from passlib.context import CryptContext
 # pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
-# pwd = pwd_context.hash("7021")
+# pwd = pwd_context.hash("1234")
 # print(pwd)
 
-user_order_data = db.query(models.User_Orders).filter(models.User_Orders.order_Id == 1).first()
-cust_data = db.query(models.Customer_login).filter(models.Customer_login.user_Id == user_order_data.user_Id).first()
-print(cust_data.user_Email_Id)
+# user_order_data = db.query(models.User_Orders).filter(models.User_Orders.order_Id == 1).first()
+# cust_data = db.query(models.Customer_login).filter(models.Customer_login.user_Id == user_order_data.user_Id).first()
+# print(cust_data.user_Email_Id)
+
+SECERT_KEY = secrets.token_bytes(16)
+print(SECERT_KEY)

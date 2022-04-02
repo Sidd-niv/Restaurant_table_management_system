@@ -13,9 +13,12 @@ from fastapi.templating import Jinja2Templates
 # APIRouter object to access the application routes
 router = APIRouter(tags=["Admin"])
 
-# templates objects to return the UI page based on requests
+# Defining the template object for jinja2Templating to access/ render the html templates
 templates = Jinja2Templates(directory="templates/")
+
+# mounting the static files, through which fastapi can access the css and images files
 router.mount("/static", StaticFiles(directory="static/"), name="static")
+
 
 # Admin login generic API which accept only to request get and post
 # get request returns admin login html page
@@ -60,8 +63,10 @@ async def admin_login(request: Request, db: Session = Depends(get_db)):
         Customer_orders = db.query(models.Customer_login.user_Name, models.Restaurant_table.table_no_Id,
                                    models.User_Orders.food_item_desc, models.User_Orders.person_per_table,
                                    models.User_Orders.order_time, models.Customer_login.user_phone_number,
-                                   models.User_Orders.order_Id).join(models.User_Orders,models.Customer_login.user_Id == models.User_Orders.user_Id).join(models.Restaurant_table,
-                                   models.User_Orders.user_Id == models.Restaurant_table.user_Id_no)
+                                   models.User_Orders.order_Id).join(models.User_Orders,
+                                                                     models.Customer_login.user_Id == models.User_Orders.user_Id).join(
+            models.Restaurant_table,
+            models.User_Orders.user_Id == models.Restaurant_table.user_Id_no)
 
         # returning the result template in response
         response = templates.TemplateResponse("Adminpanelpage.html",
@@ -106,41 +111,59 @@ async def admin_dashborad(request: Request, db: Session = Depends(get_db)):
         Customer_orders = db.query(models.Customer_login.user_Name, models.Restaurant_table.table_no_Id,
                                    models.User_Orders.food_item_desc, models.User_Orders.person_per_table,
                                    models.User_Orders.order_time, models.Customer_login.user_phone_number,
-                                   models.User_Orders.order_Id).join(models.User_Orders,models.Customer_login.user_Id == models.User_Orders.user_Id
-                                   ).join(models.Restaurant_table,
-                                   models.User_Orders.user_Id == models.Restaurant_table.user_Id_no)
+                                   models.User_Orders.order_Id).join(models.User_Orders,
+                                                                     models.Customer_login.user_Id == models.User_Orders.user_Id
+                                                                     ).join(models.Restaurant_table,
+                                                                            models.User_Orders.user_Id == models.Restaurant_table.user_Id_no)
 
-        # ret
+        # returning the admin dashboard html page order data read from database with join query
         return templates.TemplateResponse("Adminpanelpage.html",
                                           context={"request": request, "Customer_data": Customer_orders})
 
+    # if the request is get then it will return admin login page
     else:
         return templates.TemplateResponse("Adminpage.html", context={"request": request, "error": "please login"})
 
 
+# Billing api which will handle get and post request
 @router.api_route("/billing", status_code=status.HTTP_409_CONFLICT, methods=["GET", "POST"])
 async def billing(request: Request, db: Session = Depends(get_db)):
+
+    # if the request is post then the user is sending the data, then this if condition will run
     if request.method == "POST":
+
+        # reading the user cookies for access token
         user_Id = request.cookies.get("access_token")
+
+        # if the user does not have any cookie the it will raise a http exception
         try:
+            # if the user_Id is none then raise and return admin login page
             if not user_Id:
                 raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="User not found")
-        except Token_Exception:
+        except HTTPException:
             return templates.TemplateResponse("Adminpage.html", context={"request": request, "error": "please login"})
 
+        # Verifying the user_Id access token
         try:
             user_id_no = oauth.get_admin_user(user_Id)
         except Token_Exception:
+            # if token is invalid or couldn't validate the access token then an exception will raise
             return templates.TemplateResponse("Adminpage.html", context={"request": request, "error": "please login"})
 
+        # Since all the credential's are verified
+        # With form method we are extracting html form data
         form_data = await request.form()
 
+        # Defining the user data inside reference variable
         user_order_Id = form_data.get("order_ID")
         food_items_placed = form_data.get("food")
         amount = form_data.get("amount")
 
+        # read the user order data based on user unique id
         user_order_data = db.query(models.User_Orders).filter(models.User_Orders.order_Id == user_order_Id).first()
 
+        # if user_order_data is None then order id doesn't exists
+        # in that case it will raise a exception and return an return billdashboard
         try:
             if not user_order_data:
                 raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="User not found")
@@ -148,9 +171,11 @@ async def billing(request: Request, db: Session = Depends(get_db)):
             return templates.TemplateResponse("billdashboard.html",
                                               context={"request": request, "msg": "Invalid order_ID"})
 
+        # reading the customer data based on user_order_data user_Id
         cust_data = db.query(models.Customer_login).filter(
             models.Customer_login.user_Id == user_order_data.user_Id).first()
 
+        # if cust_data is none then it will raise a httpexception
         try:
             if not cust_data:
                 raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="User not found")
@@ -158,6 +183,7 @@ async def billing(request: Request, db: Session = Depends(get_db)):
             return templates.TemplateResponse("billdashboard.html",
                                               context={"request": request, "msg": "Something went wrong"})
 
+        # creating the invoice data content
         pdf_content = [
             f"Name: {cust_data.user_Name}",
             f"food details: {food_items_placed}",
@@ -166,8 +192,10 @@ async def billing(request: Request, db: Session = Depends(get_db)):
             f"Please visit us again"
         ]
 
+        # calling the make_pdf function to create th pdf
         make_pdf(pdf_content)
 
+        # calling the send_mail function to mail the invoices
         try:
             send_mail(cust_data.user_Email_Id)
         except Exception:
@@ -175,9 +203,11 @@ async def billing(request: Request, db: Session = Depends(get_db)):
                                               context={"request": request,
                                                        "msg": "Something went wrong contact developer"})
 
-        # db.delete(user_order_data)
-        #
-        # db.commit()
+        # since pdf is send then we don't need user_order data in order table it will perform a delete operation
+        db.delete(user_order_data)
+
+        # commit method to save the changes
+        db.commit()
 
         return templates.TemplateResponse("billdashboard.html",
                                           context={"request": request, "msg": "Invoice as been send"})
@@ -234,7 +264,8 @@ async def add_food_items(request: Request, db: Session = Depends(get_db)):
 
         food_item = db.query(models.Food_items).all()
 
-        return templates.TemplateResponse("adminfooddashboard.html", context={"request": request, "food_item": food_item},
+        return templates.TemplateResponse("adminfooddashboard.html",
+                                          context={"request": request, "food_item": food_item},
                                           status_code=status.HTTP_201_CREATED)
 
     elif request.method == "GET":
@@ -251,7 +282,6 @@ async def add_food_items(request: Request, db: Session = Depends(get_db)):
         except Token_Exception:
             return templates.TemplateResponse("Adminpage.html", context={"request": request, "error": "please login"})
 
-
         food_item = db.query(models.Food_items).all()
 
         return templates.TemplateResponse("adminfooddashboard.html",
@@ -265,7 +295,6 @@ async def add_food_items(request: Request, db: Session = Depends(get_db)):
 
 @router.api_route("/update_food_items", status_code=status.HTTP_409_CONFLICT, methods=["GET", "POST"])
 async def update_food_items(request: Request, db: Session = Depends(get_db)):
-
     if request.method == "POST":
         user_Id = request.cookies.get("access_token")
         try:
@@ -343,9 +372,9 @@ async def update_food_items(request: Request, db: Session = Depends(get_db)):
         return templates.TemplateResponse("Adminpage.html", context={"request": request, "error": "Please login"},
                                           status_code=status.HTTP_403_FORBIDDEN)
 
+
 @router.api_route("/delete_food_items", status_code=status.HTTP_200_OK, methods=["GET", "POST"])
 async def delete_food_items(request: Request, db: Session = Depends(get_db)):
-
     if request.method == "POST":
         user_Id = request.cookies.get("access_token")
         try:
@@ -383,8 +412,7 @@ async def delete_food_items(request: Request, db: Session = Depends(get_db)):
         return templates.TemplateResponse("Adminpage.html", context={"request": request, "error": "Please login"},
                                           status_code=status.HTTP_403_FORBIDDEN)
 
-
-
+#
 @router.api_route("/admin_logout", status_code=status.HTTP_200_OK, methods=["GET", "POST"])
 def admin_logout(response: Response, request: Request):
     if request.method == "POST":
