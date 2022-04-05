@@ -6,14 +6,13 @@ import models
 from database_con import SessionLocal
 from schemas import Token_data, Token_access_data
 
-# Object of Sessionlocal
+# Object of SessionLocal
 db = SessionLocal()
 
 
 # Custom Exception
 class Token_Exception(HTTPException):
     pass
-
 
 # Secret Key references variable
 SECERT_KEY = "pinaspdn[own[as;lnd'pnas[dnoiv uv8bpnsm[lsmd[j0]wfjn[own"
