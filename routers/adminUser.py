@@ -488,9 +488,10 @@ async def delete_food_items(request: Request, db: Session = Depends(get_db)):
 
         # if food_item_data is None then the item_id is invalid or does not exists.
         if not food_item_data:
+            # reading all food items for responsive page to show admin the food table
+            food_item = db.query(models.Food_items).all()
             return templates.TemplateResponse("adminfooddashboard.html",
-                                              status_code=status.HTTP_204_NO_CONTENT,
-                                              context={"request": request, "del_error": "Invalid food ID"})
+                                              context={"request": request, "del_error": "Invalid food ID", "food_item": food_item})
 
         # Since food data is there we will perform delete operation.
         db.delete(food_item_data)
@@ -498,9 +499,11 @@ async def delete_food_items(request: Request, db: Session = Depends(get_db)):
         # Saving the changes.
         db.commit()
 
+        # reading all food items for responsive page to show admin the food table
+        food_item = db.query(models.Food_items).all()
+
         return templates.TemplateResponse("adminfooddashboard.html",
-                                          status_code=status.HTTP_204_NO_CONTENT,
-                                          context={"request": request, "del_error": "Item deleted"})
+                                          context={"request": request, "del_error": "Item deleted","food_item": food_item})
 
 
     else:
