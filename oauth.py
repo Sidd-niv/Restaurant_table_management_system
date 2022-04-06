@@ -5,7 +5,7 @@ from fastapi import status, HTTPException
 import models
 from database_con import SessionLocal
 from schemas import Token_data, Token_access_data
-
+from config import setting
 # Object of SessionLocal
 db = SessionLocal()
 
@@ -15,14 +15,13 @@ class Token_Exception(HTTPException):
     pass
 
 # Secret Key references variable
-SECERT_KEY = "pinaspdn[own[as;lnd'pnas[dnoiv uv8bpnsm[lsmd[j0]wfjn[own"
+SECERT_KEY = setting.secert_key
 
 # Algorithm
-ALGORITHM = "HS256"
+ALGORITHM = setting.algorithm
 
 # Expire time
-ACCESS_TOKEN_EXPIRE_TIME = 60
-
+ACCESS_TOKEN_EXPIRE_TIME = setting.access_token_expire_time
 
 # verifying the user id from database
 def verify_user_db(user_ID: int):

@@ -1,15 +1,13 @@
 from pydantic import BaseSettings
 
-class Settings(BaseSettings):
 
-    database_hostname : str
-    database_port: str
-    database_password: str
-    database_name: str
-    database_username: str
-    secret_key: str
+class Settings(BaseSettings):
+    SQLALCHEMY_DATABASE_URL: str
+    secert_key: str
     algorithm: str
-    access_token_expire_minutes: int
+    access_token_expire_time: int
+    sender_email: str
+    password: str
 
     class Config:
         env_file = ".env"

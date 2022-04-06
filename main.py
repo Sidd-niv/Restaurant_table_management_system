@@ -9,7 +9,7 @@ from fastapi.middleware.cors import CORSMiddleware
 # Defining the instance of fastapi
 app = FastAPI()
 
-# This will allow our application to access other domain requests
+# This will allow our application to accept other domain requests
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
