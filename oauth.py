@@ -78,17 +78,17 @@ def verify_access_token(token: str):
 
         # if the user data is not there in token then raise a HTTPException
         if id is None:
-            raise Token_Exception(status_code=status.HTTP_404_NOT_FOUND, detail="Could not validate credentials")
+            raise Token_Exception(status_code=status.HTTP_203_NON_AUTHORITATIVE_INFORMATION, detail="Could not validate credentials")
 
         # Save the user data in pydantic class object and converting it into dictionary data structure
         token_data = Token_data(id=token_id).dict()
 
         # verifying the user is there in database or not
         if verify_user_db(token_data['id']) == False:
-            raise Token_Exception(status_code=status.HTTP_404_NOT_FOUND, detail="Could not validate credentials")
+            raise Token_Exception(status_code=status.HTTP_203_NON_AUTHORITATIVE_INFORMATION, detail="Could not validate credentials")
 
     except JWTError:
-        raise Token_Exception(status_code=status.HTTP_404_NOT_FOUND, detail="Could not validate credentials")
+        raise Token_Exception(status_code=status.HTTP_203_NON_AUTHORITATIVE_INFORMATION, detail="Could not validate credentials")
 
     # hence there is no exception we can pass the user data from token
     return token_data
@@ -110,17 +110,17 @@ def verify_admin_token(token: str):
 
         # if the user data is not there in token then raise a HTTPException
         if user_email is None:
-            raise Token_Exception(status_code=status.HTTP_404_NOT_FOUND, detail="Could not validate credentials")
+            raise Token_Exception(status_code=status.HTTP_401_UNAUTHORIZED, detail="Could not validate credentials")
 
         # Save the user data in pydantic class object and converting it into dictionary data structure
         token_data = Token_access_data(user_email=user_email).dict()
 
         # verifying the admin is there in database or not
         if verify_admin_db(token_data['user_email']) == False:
-            raise Token_Exception(status_code=status.HTTP_404_NOT_FOUND, detail="Could not validate credentials")
+            raise Token_Exception(status_code=status.HTTP_203_NON_AUTHORITATIVE_INFORMATION, detail="Could not validate credentials")
 
     except JWTError:
-        raise Token_Exception(status_code=status.HTTP_404_NOT_FOUND, detail="Could not validate credentials")
+        raise Token_Exception(status_code=status.HTTP_203_NON_AUTHORITATIVE_INFORMATION, detail="Could not validate credentials")
 
     # hence there is no exception we can pass the admin data from token
     return token_data
