@@ -40,9 +40,10 @@ async def user_register(request: Request, db: Session = Depends(get_db)):
             # if yes raise a exception
             if email_id_check:
                 raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Already in use")
-        except HTTPException:
-            return templates.TemplateResponse("Registration_page.html", context={"request": request,
-                                                                                 "email_msg": "Email is already register please enter another one"})
+        except HTTPException as h:
+            return templates.TemplateResponse("Registration_page.html", status_code=h.status_code
+                                              , context={"request": request,
+                                                         "email_msg": "Email is already register please enter another one"})
 
         try:
             phone_check = db.query(models.Customer_login).filter(
@@ -51,10 +52,12 @@ async def user_register(request: Request, db: Session = Depends(get_db)):
             # if the phone number is there in Database and used by another user or not
             # if yes raise a exception
             if phone_check:
-                raise HTTPException(status_code=status.HTTP_406_NOT_ACCEPTABLE, detail="Already in use")
-        except HTTPException:
-            return templates.TemplateResponse("Registration_page.html", context={"request": request,
-                                                                                 "phone_msg": "Phone number is already register please enter another one"})
+                raise HTTPException(status_code=status.HTTP_406_NOT_ACCEPTABLE)
+        except HTTPException as h:
+            return templates.TemplateResponse("Registration_page.html",
+                                              status_code=h.status_code,
+                                              context={"request": request,
+                                                       "phone_msg": "Phone number is already register please enter another one"})
 
         # All criteria are satisfied
         # Performing the Create operation on database with the help of sqlAlchemy
@@ -70,10 +73,12 @@ async def user_register(request: Request, db: Session = Depends(get_db)):
         # Saving the user data in database in MySQL database
         db.commit()
 
-        return templates.TemplateResponse("login_page.html", context={"request": request}, status_code=status.HTTP_201_CREATED)
+        return templates.TemplateResponse("login_page.html", status_code=status.HTTP_201_CREATED,
+                                          context={"request": request})
 
     else:
-        return templates.TemplateResponse("Registration_page.html", context={"request": request}, status_code=status.HTTP_302_FOUND)
+        return templates.TemplateResponse("Registration_page.html", status_code=status.HTTP_302_FOUND,
+                                          context={"request": request})
 
 
 @router.api_route("/login", response_class=HTMLResponse, methods=["GET", "POST"], status_code=status.HTTP_200_OK)
@@ -94,8 +99,8 @@ async def login(response: Response, request: Request, db: Session = Depends(get_
             # if user is null then raise a exception and redirect the user to login page with a message
             if not user_data:
                 raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED)
-        except HTTPException:
-            return templates.TemplateResponse("login_page.html",
+        except HTTPException as h:
+            return templates.TemplateResponse("login_page.html", status_code=h.status_code,
                                               context={"request": request, "error": "Invalid Email or User Not found"}
                                               )
 
@@ -103,8 +108,9 @@ async def login(response: Response, request: Request, db: Session = Depends(get_
             # If user password doesn't match with user input then rasie a exception and redirect user to login page with a message
             if not utils.verify_pwd(pwd.strip(), user_data.user_Password):
                 raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED)
-        except HTTPException:
+        except HTTPException as h:
             return templates.TemplateResponse("login_page.html",
+                                              status_code=h.status_code,
                                               context={"request": request, "error": "Invalid Password"})
 
         # After verification we are creating a JWT token to authorize the user for further user task
@@ -120,9 +126,9 @@ async def login(response: Response, request: Request, db: Session = Depends(get_
         table_availiable = db.query(models.Restaurant_table).filter(models.Restaurant_table.user_Id_no == 0)
 
         # returning the result template in response
-        response = templates.TemplateResponse("userdashbroad.html",
+        response = templates.TemplateResponse("userdashbroad.html", status_code=status.HTTP_302_FOUND,
                                               context={"request": request, "user": user_name, "food_item": food_item,
-                                                       "table_availiable": table_availiable}, status_code=status.HTTP_302_FOUND)
+                                                       "table_availiable": table_availiable})
 
         # setting the cookie of logged user with access token
         response.set_cookie(key="access_token", value=access_token, httponly=True)
@@ -155,14 +161,17 @@ async def user_Dashbroad(response: Response, request: Request, db: Session = Dep
             # if the user cookie is none they raise a exception
             if not user_Id:
                 raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED)
-        except HTTPException:
-            return templates.TemplateResponse("login_page.html", context={"request": request, "error": "Please login"})
+        except HTTPException as h:
+            return templates.TemplateResponse("login_page.html",
+                                              status_code=h.status_code,
+                                              context={"request": request, "error": "Please login"})
 
         # Verifying the user credentials i.e.. JWT token for authorization
         try:
             user_id_no = oauth.get_current_user(user_Id)
         except Token_Exception as t:
-            return templates.TemplateResponse("login_page.html", context={"request": request, "error": t.detail}, status_code=status.HTTP_203_NON_AUTHORITATIVE_INFORMATION)
+            return templates.TemplateResponse("login_page.html", status_code=t.status_code
+                                              , context={"request": request, "error": t.detail})
 
         # Retrieve the user data from database
         user_data = db.query(models.Customer_login).filter(models.Customer_login.user_Id == user_id_no["id"]).first()
@@ -184,7 +193,7 @@ async def user_Dashbroad(response: Response, request: Request, db: Session = Dep
             if user_order_check:
                 raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="You have already booked your table")
         except HTTPException as h:
-            return templates.TemplateResponse("userdashbroad.html",
+            return templates.TemplateResponse("userdashbroad.html", status_code=h.status_code,
                                               context={"request": request, "error": h.detail,
                                                        "user": user_name,
                                                        "food_item": food_item,
@@ -197,9 +206,9 @@ async def user_Dashbroad(response: Response, request: Request, db: Session = Dep
         try:
             # if table is not there then it will return None.
             if not user_table_booking:
-                raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid table no.")
-        except HTTPException:
-            return templates.TemplateResponse("userdashbroad.html",
+                raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED)
+        except HTTPException as h:
+            return templates.TemplateResponse("userdashbroad.html", status_code=h.status_code,
                                               context={"request": request, "error": "Enter a valid Table No.",
                                                        "user": user_name,
                                                        "food_item": food_item,
@@ -208,9 +217,9 @@ async def user_Dashbroad(response: Response, request: Request, db: Session = Dep
         try:
             # If the user_Id of restaurant table relation is not zero than it is used by others.
             if user_table_booking.user_Id_no != 0:
-                raise HTTPException(status_code=status.HTTP_203_NON_AUTHORITATIVE_INFORMATION, detail="Invalid table no.", )
-        except HTTPException:
-            return templates.TemplateResponse("userdashbroad.html",
+                raise HTTPException(status_code=status.HTTP_203_NON_AUTHORITATIVE_INFORMATION)
+        except HTTPException as h:
+            return templates.TemplateResponse("userdashbroad.html", status_code=h.status_code,
                                               context={"request": request, "error": "Table is already booked",
                                                        "user": user_name,
                                                        "food_item": food_item,
@@ -252,10 +261,10 @@ async def user_Dashbroad(response: Response, request: Request, db: Session = Dep
         table_availiable = db.query(models.Restaurant_table).filter(models.Restaurant_table.user_Id_no == 0)
 
         # returning the userdashbroad with food menu data and table data
-        return templates.TemplateResponse("userdashbroad.html",
+        return templates.TemplateResponse("userdashbroad.html", status_code=status.HTTP_201_CREATED,
                                           context={"request": request, "user": user_name,
                                                    "food_item": food_item,
-                                                   "table_availiable": table_availiable}, status_code=status.HTTP_201_CREATED)
+                                                   "table_availiable": table_availiable})
 
     # if the user request is get then this logic will run.
     elif request.method == "GET":
@@ -267,15 +276,17 @@ async def user_Dashbroad(response: Response, request: Request, db: Session = Dep
             # if the user cookie is none they raise a exception
             if not user_Id:
                 raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED)
-        except HTTPException:
-            return templates.TemplateResponse("login_page.html", context={"request": request, "error": "Please login"})
+        except HTTPException as h:
+            return templates.TemplateResponse("login_page.html", status_code=h.status_code,
+                                              context={"request": request, "error": "Please login"})
 
         try:
             # if user as access token they verify it
             user_id_no = oauth.get_current_user(user_Id)
         except Token_Exception as t:
-            return templates.TemplateResponse("login_page.html", context={"request": request, "error": t.detail},
-                                              status_code=status.HTTP_203_NON_AUTHORITATIVE_INFORMATION)
+            return templates.TemplateResponse("login_page.html",
+                                              status_code=t.status_code,
+                                              context={"request": request, "error": t.detail})
 
         # After authentication read user info from data base.
         user_data = db.query(models.Customer_login).filter(models.Customer_login.user_Id == user_id_no["id"]).first()
@@ -289,9 +300,9 @@ async def user_Dashbroad(response: Response, request: Request, db: Session = Dep
         # Retrieving the available tables from database
         table_availiable = db.query(models.Restaurant_table).filter(models.Restaurant_table.user_Id_no == 0)
 
-        return templates.TemplateResponse("userdashbroad.html",
+        return templates.TemplateResponse("userdashbroad.html", status_code=status.HTTP_200_OK,
                                           context={"request": request, "user": user_name, "food_item": food_item,
-                                                   "table_availiable": table_availiable}, status_code=status.HTTP_200_OK)
+                                                   "table_availiable": table_availiable})
 
 
 # This API is to allow user to view the booking details
@@ -309,8 +320,8 @@ async def myorders(request: Request, db: Session = Depends(get_db)):
             try:
                 # If access token is invalid it will raise a token exception.
                 user_id_no = oauth.get_current_user(user_Id)
-            except Token_Exception:
-                return templates.TemplateResponse("login_page.html",
+            except Token_Exception as t:
+                return templates.TemplateResponse("login_page.html", status_code=t.status_code,
                                                   context={"request": request, "error": "Please login"})
 
             # Since user token is valid we will perform a read operation with user_Id
@@ -337,24 +348,25 @@ async def myorders(request: Request, db: Session = Depends(get_db)):
                 table_availiable = db.query(models.Restaurant_table).filter(models.Restaurant_table.user_Id_no == 0)
 
                 # Since user order data is none we are returning the userdashborad with the below message
-                return templates.TemplateResponse("userdashbroad.html",
+                return templates.TemplateResponse("userdashbroad.html", status_code=status.HTTP_406_NOT_ACCEPTABLE,
                                                   context={"request": request, "error": "You didn't placed any order",
                                                            "user": user_name, "food_item": food_item,
                                                            "table_availiable": table_availiable,
-                                                           }, status_code=status.HTTP_401_UNAUTHORIZED)
+                                                           })
             # if user found return my order page to view
             return templates.TemplateResponse("myorderspage.html",
+                                              status_code=status.HTTP_302_FOUND,
                                               context={"request": request,
                                                        "food_item_desc": user_order_data.food_item_desc,
                                                        "person_per_table": user_order_data.person_per_table,
                                                        "order_time": user_order_data.order_time,
-                                                       "table": user_booked_table.table_no_Id},
-                                              status_code=status.HTTP_302_FOUND)
+                                                       "table": user_booked_table.table_no_Id})
 
         # user access token is None then we are redirecting user to login page.
         else:
             return templates.TemplateResponse("login_page.html",
-                                              context={"request": request, "error": "Please login"}, status_code=status.HTTP_401_UNAUTHORIZED)
+                                              status_code=status.HTTP_401_UNAUTHORIZED,
+                                              context={"request": request, "error": "Please login"})
 
     else:
         return templates.TemplateResponse("login_page.html",
@@ -372,8 +384,8 @@ def deleteOrder(request: Request, db: Session = Depends(get_db)):
         try:
             # verifying the JWT token if invalid then it will raise a exception
             user_id_no = oauth.get_current_user(user_Id)
-        except Token_Exception:
-            return templates.TemplateResponse("login_page.html",
+        except Token_Exception as t:
+            return templates.TemplateResponse("login_page.html", status_code= t.status_code,
                                               context={"request": request, "error": "Please login"})
 
         # Since user is authenticated then we will try to read user data  from user order table
@@ -412,14 +424,14 @@ def deleteOrder(request: Request, db: Session = Depends(get_db)):
         # Retrieving the available tables from database
         table_availiable = db.query(models.Restaurant_table).filter(models.Restaurant_table.user_Id_no == 0)
 
-        return templates.TemplateResponse("userdashbroad.html",
+        return templates.TemplateResponse("userdashbroad.html", status_code=status.HTTP_201_CREATED,
                                           context={"request": request, "user": user_name, "food_item": food_item,
-                                                   "table_availiable": table_availiable}, status_code=status.HTTP_201_CREATED)
+                                                   "table_availiable": table_availiable})
+
 
 # This API will remove the user access token from user cookie for logout functionality
 @router.api_route("/user_logout", status_code=status.HTTP_200_OK, methods=["GET", "POST"])
 async def user_logout(response: Response, request: Request):
-
     # If user request is post then run the below if part code.
     if request.method == "POST":
 
@@ -429,8 +441,8 @@ async def user_logout(response: Response, request: Request):
             # if user token is None then raise a exception
             if not user_token_data:
                 raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED)
-        except HTTPException:
-            return templates.TemplateResponse("login_page.html", context={"request": request, "error": "Please Login"})
+        except HTTPException as h:
+            return templates.TemplateResponse("login_page.html", status_code= h.status_code,context={"request": request, "error": "Please Login"})
 
         # saving the retrun html page in response
         response = templates.TemplateResponse("login_page.html", context={"request": request},
@@ -442,5 +454,6 @@ async def user_logout(response: Response, request: Request):
         # Return the response.
         return response
     else:
-        return templates.TemplateResponse("login_page.html", context={"request": request, "error": "Please login"},
-                                          status_code=status.HTTP_406_NOT_ACCEPTABLE)
+        return templates.TemplateResponse("login_page.html", status_code=status.HTTP_406_NOT_ACCEPTABLE,
+                                          context={"request": request, "error": "Please login"},
+                                          )

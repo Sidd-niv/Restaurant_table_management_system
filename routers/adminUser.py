@@ -51,8 +51,8 @@ async def admin_login(request: Request, db: Session = Depends(get_db)):
             # If user password doesn't match with user input then rasie a exception and redirect user to login page with a message
             if not utils.verify_pwd(pwd.strip(), user_data.user_Password):
                 raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED)
-        except HTTPException:
-            return templates.TemplateResponse("Adminpage.html",
+        except HTTPException as h:
+            return templates.TemplateResponse("Adminpage.html", status_code=h.status_code,
                                               context={"request": request, "error": "Invalid Password"}
                                               )
 
@@ -98,14 +98,16 @@ async def admin_dashborad(request: Request, db: Session = Depends(get_db)):
             if not user_Id:
                 raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Please login")
         except HTTPException as h:
-            return templates.TemplateResponse("Adminpage.html", context={"request": request, "error": h.detail})
+            return templates.TemplateResponse("Adminpage.html", status_code=h.status_code
+                                              , context={"request": request, "error": h.detail})
 
         # After extracting cookies from client request
         # Verifying the access token with get_admin_user
         try:
             user_id_no = oauth.get_admin_user(user_Id)
         except Token_Exception as t:
-            return templates.TemplateResponse("Adminpage.html", context={"request": request, "error": t.detail}, status_code=status.HTTP_401_UNAUTHORIZED)
+            return templates.TemplateResponse("Adminpage.html", status_code=t.status_code,
+                                              context={"request": request, "error": t.detail})
 
         # Performing inner join query on multiple table to retrieve user data
         Customer_orders = db.query(models.Customer_login.user_Name, models.Restaurant_table.table_no_Id,
@@ -122,13 +124,13 @@ async def admin_dashborad(request: Request, db: Session = Depends(get_db)):
 
     # if the request is get then it will return admin login page
     else:
-        return templates.TemplateResponse("Adminpage.html", context={"request": request, "error": "please login"}, status_code=status.HTTP_401_UNAUTHORIZED)
+        return templates.TemplateResponse("Adminpage.html", status_code=status.HTTP_401_UNAUTHORIZED,
+                                          context={"request": request, "error": "please login"})
 
 
 # Billing api which will handle get and post request
 @router.api_route("/billing", status_code=status.HTTP_409_CONFLICT, methods=["GET", "POST"])
 async def billing(request: Request, db: Session = Depends(get_db)):
-
     # if the request is post then the user is sending the data, then this if condition will run
     if request.method == "POST":
 
@@ -140,15 +142,17 @@ async def billing(request: Request, db: Session = Depends(get_db)):
             # if the user_Id is none then raise and return admin login page
             if not user_Id:
                 raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED)
-        except HTTPException:
-            return templates.TemplateResponse("Adminpage.html", context={"request": request, "error": "please login"})
+        except HTTPException as h:
+            return templates.TemplateResponse("Adminpage.html", status_code=h.status_code,
+                                              context={"request": request, "error": "please login"})
 
         # Verifying the user_Id access token
         try:
             user_id_no = oauth.get_admin_user(user_Id)
         except Token_Exception as t:
             # if token is invalid or couldn't validate the access token then an exception will raise
-            return templates.TemplateResponse("Adminpage.html", context={"request": request, "error": t.detail}, status_code=status.HTTP_401_UNAUTHORIZED)
+            return templates.TemplateResponse("Adminpage.html", status_code=t.status_code,
+                                              context={"request": request, "error": t.detail})
 
         # Since all the credential's are verified
         # With form method we are extracting html form data
@@ -167,8 +171,8 @@ async def billing(request: Request, db: Session = Depends(get_db)):
         try:
             if not user_order_data:
                 raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED)
-        except HTTPException:
-            return templates.TemplateResponse("billdashboard.html",
+        except HTTPException as h:
+            return templates.TemplateResponse("billdashboard.html", status_code=h.status_code,
                                               context={"request": request, "msg": "Invalid order_ID"})
 
         # reading the customer data based on user_order_data user_Id
@@ -179,8 +183,8 @@ async def billing(request: Request, db: Session = Depends(get_db)):
         try:
             if not cust_data:
                 raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED)
-        except HTTPException:
-            return templates.TemplateResponse("billdashboard.html",
+        except HTTPException as h:
+            return templates.TemplateResponse("billdashboard.html", status_code=h.status_code,
                                               context={"request": request, "msg": "User not found"})
 
         # creating the invoice data content
@@ -201,8 +205,7 @@ async def billing(request: Request, db: Session = Depends(get_db)):
         except Exception:
             return templates.TemplateResponse("billdashboard.html",
                                               context={"request": request,
-                                                       "msg": "Something went wrong contact developer"}, status_code=status.HTTP_409_CONFLICT)
-
+                                                       "msg": "Something went wrong contact developer"})
 
         # removing the user booked table vlaue
         user_table_booking = db.query(models.Restaurant_table).filter(
@@ -238,16 +241,18 @@ async def billing(request: Request, db: Session = Depends(get_db)):
             # user_Id is none that means there are no access token with the request and therefore ot will raise an HTTPException
             if not user_Id:
                 raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED)
-        except HTTPException:
+        except HTTPException as h:
             # it will return admin login pager with the message.
-            return templates.TemplateResponse("Adminpage.html", context={"request": request, "error": "please login"})
+            return templates.TemplateResponse("Adminpage.html", status_code=h.status_code,
+                                              context={"request": request, "error": "please login"})
 
         try:
             # Since user_Id is not none the with below method we will verify user jwt token.
             user_id_no = oauth.get_admin_user(user_Id)
         except Token_Exception as t:
             # if the jwt token is not valid then it raise a exception and return admin login page with message
-            return templates.TemplateResponse("Adminpage.html", context={"request": request, "error": t.detail})
+            return templates.TemplateResponse("Adminpage.html", status_code=t.status_code
+                                              , context={"request": request, "error": t.detail})
 
         # Since user as a valid token it will return the valid billdashoard page.
         return templates.TemplateResponse("billdashboard.html", context={"request": request})
@@ -259,7 +264,6 @@ async def billing(request: Request, db: Session = Depends(get_db)):
 
 @router.api_route("/add_food_items", status_code=status.HTTP_409_CONFLICT, methods=["GET", "POST"])
 async def add_food_items(request: Request, db: Session = Depends(get_db)):
-
     # if user request is post then run below code
     if request.method == "POST":
 
@@ -271,15 +275,18 @@ async def add_food_items(request: Request, db: Session = Depends(get_db)):
             # if none then raise a exception
             if not user_Id:
                 raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED)
-        except HTTPException:
-            return templates.TemplateResponse("Adminpage.html", context={"request": request, "error": "User not found"})
+        except HTTPException as h:
+            return templates.TemplateResponse("Adminpage.html", status_code=h.status_code,
+                                              context={"request": request, "error": "User not found"})
 
         # Since token is not none then verify the admin access token
         try:
             # if token is invalid then it will raise a exception.
             user_id_no = oauth.get_admin_user(user_Id)
         except Token_Exception as t:
-            return templates.TemplateResponse("Adminpage.html", context={"request": request, "error": t.detail}, status_code=status.HTTP_203_NON_AUTHORITATIVE_INFORMATION)
+            return templates.TemplateResponse("Adminpage.html", status_code=t.status_code,
+                                              context={"request": request, "error": t.detail},
+                                              )
 
         # Since user is authenticated we are reading the user input from html form.
         form_data = await request.form()
@@ -304,9 +311,9 @@ async def add_food_items(request: Request, db: Session = Depends(get_db)):
         # reading all food items from food items table
         food_item = db.query(models.Food_items).all()
 
-        return templates.TemplateResponse("adminfooddashboard.html",
+        return templates.TemplateResponse("adminfooddashboard.html", status_code=status.HTTP_201_CREATED,
                                           context={"request": request, "food_item": food_item},
-                                          status_code=status.HTTP_201_CREATED)
+                                          )
 
     elif request.method == "GET":
 
@@ -320,19 +327,21 @@ async def add_food_items(request: Request, db: Session = Depends(get_db)):
         try:
             user_id_no = oauth.get_admin_user(user_Id)
         except Token_Exception as t:
-            return templates.TemplateResponse("Adminpage.html", context={"request": request, "error": t.detail})
+            return templates.TemplateResponse("Adminpage.html", status_code=t.status_code
+                                              , context={"request": request, "error": t.detail})
 
         food_item = db.query(models.Food_items).all()
 
         # Since user as a valid token it will return the valid billdashoard page.
-        return templates.TemplateResponse("adminfooddashboard.html",
+        return templates.TemplateResponse("adminfooddashboard.html", status_code=status.HTTP_200_OK,
                                           context={"request": request, "food_item": food_item},
-                                          status_code=status.HTTP_200_OK)
+                                          )
 
     # if this API is hint without any cookie so it will return admin login page
     else:
-        return templates.TemplateResponse("Adminpage.html", context={"request": request, "error": "Please login"},
-                                          status_code=status.HTTP_406_NOT_ACCEPTABLE)
+        return templates.TemplateResponse("Adminpage.html", status_code=status.HTTP_406_NOT_ACCEPTABLE
+                                          , context={"request": request, "error": "Please login"},
+                                          )
 
 
 # This API is for update operation on food item table were admin is updating price ,food items with food_Id
@@ -347,9 +356,10 @@ async def update_food_items(request: Request, db: Session = Depends(get_db)):
             if not user_Id:
                 # if the user_Id is none then it will raise HTTPException
                 raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="User not found")
-        except HTTPException as o:
+        except HTTPException as h:
             # returning admin login page since user don't have any access token.
-            return templates.TemplateResponse("Adminpage.html", context={"request": request, "error": o.detail})
+            return templates.TemplateResponse("Adminpage.html", status_code= h.status_code,
+                                              context={"request": request, "error": h.detail})
 
         try:
             # Verifying user access token with below method
@@ -357,7 +367,8 @@ async def update_food_items(request: Request, db: Session = Depends(get_db)):
 
         # if the user has invalid token it will
         except Token_Exception as t:
-            return templates.TemplateResponse("Adminpage.html", context={"request": request, "error": t.detail})
+            return templates.TemplateResponse("Adminpage.html", status_code= t.status_code ,
+                                              context={"request": request, "error": t.detail})
 
         # Extracting form data.
         form_data = await request.form()
@@ -371,9 +382,9 @@ async def update_food_items(request: Request, db: Session = Depends(get_db)):
         # if condition to check the food_item_data is None or not.
         if not food_item_data:
             # if None then return adminfooddashboard page with a message
-            return templates.TemplateResponse("adminfooddashboard.html",
+            return templates.TemplateResponse("adminfooddashboard.html", status_code=status.HTTP_204_NO_CONTENT,
                                               context={"request": request, "update_error": "Invalid food ID"},
-                                              status_code=status.HTTP_204_NO_CONTENT)
+                                              )
 
         # if the admin want to update both the entity then this if condition will be true and then below operation will run
         if item_name and item_price:
@@ -394,9 +405,9 @@ async def update_food_items(request: Request, db: Session = Depends(get_db)):
             # reading all food items for responsive page to show admin the food table
             food_item = db.query(models.Food_items).all()
 
-            return templates.TemplateResponse("adminfooddashboard.html",
+            return templates.TemplateResponse("adminfooddashboard.html", status_code=status.HTTP_200_OK,
                                               context={"request": request, "food_item": food_item},
-                                              status_code=status.HTTP_200_OK)
+                                              )
         # if the admin want to update food name then below code will run
         elif item_name:
 
@@ -415,9 +426,9 @@ async def update_food_items(request: Request, db: Session = Depends(get_db)):
             # reading all food items for responsive page to show admin the food table
             food_item = db.query(models.Food_items).all()
 
-            return templates.TemplateResponse("adminfooddashboard.html",
+            return templates.TemplateResponse("adminfooddashboard.html", status_code=status.HTTP_200_OK,
                                               context={"request": request, "food_item": food_item},
-                                              status_code=status.HTTP_200_OK)
+                                              )
         # if the admin want to update food price then below code will run
         elif item_price:
 
@@ -436,18 +447,18 @@ async def update_food_items(request: Request, db: Session = Depends(get_db)):
             # reading all food items for responsive page to show admin the food table
             food_item = db.query(models.Food_items).all()
 
-            return templates.TemplateResponse("adminfooddashboard.html",
+            return templates.TemplateResponse("adminfooddashboard.html", status_code=status.HTTP_200_OK,
                                               context={"request": request, "food_item": food_item},
-                                              status_code=status.HTTP_200_OK)
+                                              )
 
     else:
-        return templates.TemplateResponse("Adminpage.html", context={"request": request, "error": "Please login"},
-                                          status_code=status.HTTP_403_FORBIDDEN)
+        return templates.TemplateResponse("Adminpage.html", status_code=status.HTTP_403_FORBIDDEN
+                                          , context={"request": request, "error": "Please login"},
+                                          )
 
 
 @router.api_route("/delete_food_items", status_code=status.HTTP_200_OK, methods=["GET", "POST"])
 async def delete_food_items(request: Request, db: Session = Depends(get_db)):
-
     # if user request is post then below code will run
     if request.method == "POST":
 
@@ -457,16 +468,16 @@ async def delete_food_items(request: Request, db: Session = Depends(get_db)):
         # if the user cookie is None then it will raise a exception.
         try:
             if not user_Id:
-                raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="User not found")
+                raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="User not found")
         except HTTPException as o:
-            return templates.TemplateResponse("Adminpage.html", context={"request": request, "error": o.detail})
+            return templates.TemplateResponse("Adminpage.html", status_code= o.status_code ,context={"request": request, "error": o.detail})
 
         # verifying the user access token.
         try:
             # if the user token is invalid then an exception will raise
             user_id_no = oauth.get_admin_user(user_Id)
         except Token_Exception as t:
-            return templates.TemplateResponse("Adminpage.html", context={"request": request, "error": t.detail})
+            return templates.TemplateResponse("Adminpage.html", status_code= t.status_code,context={"request": request, "error": t.detail})
 
         # Since all validation is done, we will read the user input.
         form_data = await request.form()
@@ -478,8 +489,9 @@ async def delete_food_items(request: Request, db: Session = Depends(get_db)):
         # if food_item_data is None then the item_id is invalid or does not exists.
         if not food_item_data:
             return templates.TemplateResponse("adminfooddashboard.html",
-                                              context={"request": request, "del_error": "Invalid food ID"},
-                                              status_code=status.HTTP_204_NO_CONTENT)
+                                              status_code=status.HTTP_204_NO_CONTENT,
+                                              context={"request": request, "del_error": "Invalid food ID"})
+
         # Since food data is there we will perform delete operation.
         db.delete(food_item_data)
 
@@ -487,18 +499,18 @@ async def delete_food_items(request: Request, db: Session = Depends(get_db)):
         db.commit()
 
         return templates.TemplateResponse("adminfooddashboard.html",
-                                          context={"request": request, "del_error": "Item deleted"},
-                                          status_code=status.HTTP_204_NO_CONTENT)
+                                          status_code=status.HTTP_204_NO_CONTENT,
+                                          context={"request": request, "del_error": "Item deleted"})
 
 
     else:
         return templates.TemplateResponse("Adminpage.html", context={"request": request, "error": "Please login"},
                                           status_code=status.HTTP_403_FORBIDDEN)
 
+
 # This api is used to perform logout functionality
 @router.api_route("/admin_logout", status_code=status.HTTP_200_OK, methods=["GET", "POST"])
 def admin_logout(response: Response, request: Request):
-
     # if the user request is post then below code will run.
     if request.method == "POST":
 
@@ -509,16 +521,16 @@ def admin_logout(response: Response, request: Request):
         try:
             if not user_token_data:
                 raise HTTPException(status_code=status.HTTP_403_FORBIDDEN)
-        except HTTPException:
-            return templates.TemplateResponse("Adminpage.html", context={"request": request, "error": "please login"}
-                                              , status_code=status.HTTP_403_FORBIDDEN)
-        response = templates.TemplateResponse("Adminpage.html", context={"request": request},
-                                              status_code=status.HTTP_200_OK)
+        except HTTPException as h:
+            return templates.TemplateResponse("Adminpage.html", status_code= h.status_code,context={"request": request, "error": "please login"})
+
+        response = templates.TemplateResponse("Adminpage.html", context={"request": request})
 
         # removing the access token from cookie.
         response.delete_cookie("access_token")
 
         return response
     else:
-        return templates.TemplateResponse("Adminpage.html", context={"request": request, "error": "Please login"},
-                                          status_code=status.HTTP_203_NON_AUTHORITATIVE_INFORMATION)
+        return templates.TemplateResponse("Adminpage.html", status_code=status.HTTP_203_NON_AUTHORITATIVE_INFORMATION,
+                                          context={"request": request, "error": "Please login"},
+                                          )
