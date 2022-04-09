@@ -16,6 +16,6 @@ Databases:- MYSQL
 ***
 ASGI Server:- GUVICORN 
 ***
-Deployed app:- https://table-bookingsystem1.herokuapp.com/
+web app link:- [https://table-bookingsystem1.herokuapp.com/]
 
 
