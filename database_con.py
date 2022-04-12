@@ -7,7 +7,7 @@ from config import setting
 # SQLALCHEMY_DATABASE_URL = setting.SQLALCHEMY_DATABASE_URL
 
 # Database driver url
-SQLALCHEMY_DATABASE_URL = "postgresql://aujdjwwviinzbk:a96c3930e1955458823c071e6a7fe937f9b9e0bab51ded4cc14240bd4dcb2ebb@ec2-44-194-4-127.compute-1.amazonaws.com:5432/da17jrcbfpjgub"
+SQLALCHEMY_DATABASE_URL = "postgresql://tzujxpjaauzjis:c03abf26e520bb6c9ccc959e153158d42e7a562d245ba562f1b7a75a666c8f49@ec2-3-218-171-44.compute-1.amazonaws.com:5432/dalh9i1r8j5dcv"
 
 # Connecting database
 engine = create_engine(SQLALCHEMY_DATABASE_URL)
