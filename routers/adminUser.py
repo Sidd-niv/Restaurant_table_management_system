@@ -29,14 +29,14 @@ async def admin_login(request: Request, db: Session = Depends(get_db)):
     if request.method == "POST":
         # Extracting the data from html form
         form_data = await request.form()
-        email_id = form_data.get("email_id")
-        pwd = form_data.get("pwd")
+        email_id = form_data.get("email_id") # Admin user name from html form.
+        pwd = form_data.get("pwd") # Admin user password from html form.
 
-        # Retrieving data from DB based on user input through HTML form \
-        # Verifying the user credential matches the user data from DB or not
+        # Retrieving data from DB based on user input through HTML form
         user_data = db.query(models.Admin_login).filter(
             models.Admin_login.user_Email_Id == email_id.strip()).first()
 
+        # Verifying the user credential matches the user data from DB or not
         try:
             # if user is null then raise a exception and redirect the user to login page with a message
             if not user_data:

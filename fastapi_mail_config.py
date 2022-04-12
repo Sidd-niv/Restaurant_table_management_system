@@ -6,14 +6,14 @@ from config import setting
 def send_mail(customer_mail: str):
 
     # Defining sender email address string
-    Sender_Email = setting.sender_email
+    Sender_Email = "fyndprojectrest333@gmail.com"
 
     # Defining receiver email address string
     Reciever_Email = customer_mail
 
     # Defining  email address password string
-    # Password = "fynd@#2612"
-    Password = setting.password
+    Password = "fynd@#2612"
+    # Password = setting.password
 
     # Defining EmailMessage class object
     newMessage = EmailMessage()

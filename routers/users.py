@@ -24,14 +24,12 @@ async def user_register(request: Request, db: Session = Depends(get_db)):
         form_data = await request.form()
 
         # saving the form user input data in reference variable
-        name = form_data.get("name")
-        email_id = form_data.get("email_id")
-        phone = form_data.get("phone")
-        pwd = form_data.get("pwd")
-        new_pwd = utils.get_Hash_pwd(pwd.strip())
+        name = form_data.get("name")  # User name
+        email_id = form_data.get("email_id") # User email
+        phone = form_data.get("phone") # User phone number
+        pwd = utils.get_Hash_pwd(form_data.get("pwd").strip()) # User password which hashed directly with hash function.
 
-        # verifying the email and phone number wheather it is already in use or not
-
+        # verifying the email and phone number whether it is already in use or not
         try:
             email_id_check = db.query(models.Customer_login).filter(
                 models.Customer_login.user_Email_Id == email_id.strip()).first()
@@ -63,7 +61,7 @@ async def user_register(request: Request, db: Session = Depends(get_db)):
         # Performing the Create operation on database with the help of sqlAlchemy
         new_user = models.Customer_login(user_Name=name.strip(),
                                          user_Email_Id=email_id.strip(),
-                                         user_Password=new_pwd,
+                                         user_Password=pwd,
                                          user_phone_number=phone,
                                          user_type="Nrl")
 
@@ -87,14 +85,16 @@ async def login(response: Response, request: Request, db: Session = Depends(get_
     if request.method == "POST":
         # Extracting the data from html form
         form_data = await request.form()
-        email_id = form_data.get("email_id")
-        pwd = form_data.get("pwd")
+        email_id = form_data.get("email_id") # user email id form login form
+        pwd = form_data.get("pwd") # user password form login form
 
-        # Retrieving data from DB based on user input through HTML form \
+
         # Verifying the user credential matches the user data from DB or not
         user_data = db.query(models.Customer_login).filter(
             models.Customer_login.user_Email_Id == email_id.strip()).first()
+        # user_data contains the matched data from DB based on email_id from html form
 
+        # Verifying the user credential matches the user data from DB or not
         try:
             # if user is null then raise a exception and redirect the user to login page with a message
             if not user_data:
@@ -154,7 +154,7 @@ async def user_Dashbroad(response: Response, request: Request, db: Session = Dep
         # Passing the HTML user input data in proper reference variable
         table_no = form_data.get("table_no")
         order_desc = form_data.get("order_desc")
-        member = form_data.get("member")
+        no_of_members = form_data.get("member")
         user_time = form_data.get("user_time")
 
         try:
@@ -242,7 +242,7 @@ async def user_Dashbroad(response: Response, request: Request, db: Session = Dep
         # initializing the user_order columns to perform create operation.
         order_data = models.User_Orders(user_Id=user_data.user_Id,
                                         food_item_desc=order_desc,
-                                        person_per_table=member,
+                                        person_per_table=no_of_members,
                                         order_time=user_time
                                         )
         # Inserting the user data
@@ -385,7 +385,7 @@ def deleteOrder(request: Request, db: Session = Depends(get_db)):
             # verifying the JWT token if invalid then it will raise a exception
             user_id_no = oauth.get_current_user(user_Id)
         except Token_Exception as t:
-            return templates.TemplateResponse("login_page.html", status_code= t.status_code,
+            return templates.TemplateResponse("login_page.html", status_code=t.status_code,
                                               context={"request": request, "error": "Please login"})
 
         # Since user is authenticated then we will try to read user data  from user order table
@@ -442,9 +442,10 @@ async def user_logout(response: Response, request: Request):
             if not user_token_data:
                 raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED)
         except HTTPException as h:
-            return templates.TemplateResponse("login_page.html", status_code= h.status_code,context={"request": request, "error": "Please Login"})
+            return templates.TemplateResponse("login_page.html", status_code=h.status_code,
+                                              context={"request": request, "error": "Please Login"})
 
-        # saving the retrun html page in response
+        # saving the return html page in response
         response = templates.TemplateResponse("login_page.html", context={"request": request},
                                               status_code=status.HTTP_200_OK)
 
