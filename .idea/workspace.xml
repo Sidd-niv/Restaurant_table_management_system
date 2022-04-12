@@ -6,12 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="3d4d9185-5d5b-4603-9f63-9cbdaf8be6a0" name="Changes" comment="deploy">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Invoice.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/Invoice.pdf" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/database_con.py" beforeDir="false" afterPath="$PROJECT_DIR$/database_con.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/fastapi_mail_config.py" beforeDir="false" afterPath="$PROJECT_DIR$/fastapi_mail_config.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oauth.py" beforeDir="false" afterPath="$PROJECT_DIR$/oauth.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routers/adminUser.py" beforeDir="false" afterPath="$PROJECT_DIR$/routers/adminUser.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routers/users.py" beforeDir="false" afterPath="$PROJECT_DIR$/routers/users.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/venv/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/venv/.gitignore" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -365,7 +361,14 @@
       <option name="project" value="LOCAL" />
       <updated>1649255058791</updated>
     </task>
-    <option name="localTasksCounter" value="29" />
+    <task id="LOCAL-00029" summary="deploy">
+      <created>1649759974824</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1649759974824</updated>
+    </task>
+    <option name="localTasksCounter" value="30" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
