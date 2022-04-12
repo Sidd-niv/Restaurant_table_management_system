@@ -6,6 +6,7 @@ import models
 from database_con import SessionLocal
 from schemas import Token_data, Token_access_data
 from config import setting
+
 # Object of SessionLocal
 db = SessionLocal()
 
