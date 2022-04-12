@@ -8,7 +8,8 @@
 - The Admin user which will be the staff person from restaurant can login and can view who as booked the table and on what time.
 - Admin can perfrom CURD operation on Food database.
 - Admin can send a invoice i.e Bill of the user via mail in the form of a pdf.
--The application is deployed on Heroku.
+- The application is deployed on Heroku.
+
 
 #### Key libraries:
 1. FASTAPI --> Framework.
@@ -24,12 +25,12 @@ Backend programing language: Python
 ***
 Web Framework:- FASTAPI
 ***
-Frontend :- HTML, CSS
+Frontend :- HTML, CSS.
 ***
 Databases:- MYSQL
 ***
 ASGI Server:- GUVICORN 
 ***
-web app link:- [https://table-bookingsystem1.herokuapp.com/]
+web app link:- https://table-bookingsystem1.herokuapp.com/
 
 
