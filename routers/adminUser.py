@@ -29,8 +29,8 @@ async def admin_login(request: Request, db: Session = Depends(get_db)):
     if request.method == "POST":
         # Extracting the data from html form
         form_data = await request.form()
-        email_id = form_data.get("email_id") # Admin user name from html form.
-        pwd = form_data.get("pwd") # Admin user password from html form.
+        email_id = form_data.get("email_id")  # Admin user name from html form.
+        pwd = form_data.get("pwd")  # Admin user password from html form.
 
         # Retrieving data from DB based on user input through HTML form
         user_data = db.query(models.Admin_login).filter(
@@ -358,7 +358,7 @@ async def update_food_items(request: Request, db: Session = Depends(get_db)):
                 raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="User not found")
         except HTTPException as h:
             # returning admin login page since user don't have any access token.
-            return templates.TemplateResponse("Adminpage.html", status_code= h.status_code,
+            return templates.TemplateResponse("Adminpage.html", status_code=h.status_code,
                                               context={"request": request, "error": h.detail})
 
         try:
@@ -367,7 +367,7 @@ async def update_food_items(request: Request, db: Session = Depends(get_db)):
 
         # if the user has invalid token it will
         except Token_Exception as t:
-            return templates.TemplateResponse("Adminpage.html", status_code= t.status_code ,
+            return templates.TemplateResponse("Adminpage.html", status_code=t.status_code,
                                               context={"request": request, "error": t.detail})
 
         # Extracting form data.
@@ -382,8 +382,12 @@ async def update_food_items(request: Request, db: Session = Depends(get_db)):
         # if condition to check the food_item_data is None or not.
         if not food_item_data:
             # if None then return adminfooddashboard page with a message
-            return templates.TemplateResponse("adminfooddashboard.html", status_code=status.HTTP_204_NO_CONTENT,
-                                              context={"request": request, "update_error": "Invalid food ID"},
+
+            # reading all food items for responsive page to show admin the food table
+            food_item = db.query(models.Food_items).all()
+            return templates.TemplateResponse("adminfooddashboard.html",
+                                              context={"request": request, "update_error": "Invalid food ID",
+                                                       "food_item": food_item}
                                               )
 
         # if the admin want to update both the entity then this if condition will be true and then below operation will run
@@ -470,14 +474,16 @@ async def delete_food_items(request: Request, db: Session = Depends(get_db)):
             if not user_Id:
                 raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="User not found")
         except HTTPException as o:
-            return templates.TemplateResponse("Adminpage.html", status_code= o.status_code ,context={"request": request, "error": o.detail})
+            return templates.TemplateResponse("Adminpage.html", status_code=o.status_code,
+                                              context={"request": request, "error": o.detail})
 
         # verifying the user access token.
         try:
             # if the user token is invalid then an exception will raise
             user_id_no = oauth.get_admin_user(user_Id)
         except Token_Exception as t:
-            return templates.TemplateResponse("Adminpage.html", status_code= t.status_code,context={"request": request, "error": t.detail})
+            return templates.TemplateResponse("Adminpage.html", status_code=t.status_code,
+                                              context={"request": request, "error": t.detail})
 
         # Since all validation is done, we will read the user input.
         form_data = await request.form()
@@ -491,7 +497,8 @@ async def delete_food_items(request: Request, db: Session = Depends(get_db)):
             # reading all food items for responsive page to show admin the food table
             food_item = db.query(models.Food_items).all()
             return templates.TemplateResponse("adminfooddashboard.html",
-                                              context={"request": request, "del_error": "Invalid food ID", "food_item": food_item})
+                                              context={"request": request, "del_error": "Invalid food ID",
+                                                       "food_item": food_item})
 
         # Since food data is there we will perform delete operation.
         db.delete(food_item_data)
@@ -503,7 +510,8 @@ async def delete_food_items(request: Request, db: Session = Depends(get_db)):
         food_item = db.query(models.Food_items).all()
 
         return templates.TemplateResponse("adminfooddashboard.html",
-                                          context={"request": request, "del_error": "Item deleted","food_item": food_item})
+                                          context={"request": request, "del_error": "Item deleted",
+                                                   "food_item": food_item})
 
 
     else:
@@ -525,7 +533,8 @@ def admin_logout(response: Response, request: Request):
             if not user_token_data:
                 raise HTTPException(status_code=status.HTTP_403_FORBIDDEN)
         except HTTPException as h:
-            return templates.TemplateResponse("Adminpage.html", status_code= h.status_code,context={"request": request, "error": "please login"})
+            return templates.TemplateResponse("Adminpage.html", status_code=h.status_code,
+                                              context={"request": request, "error": "please login"})
 
         response = templates.TemplateResponse("Adminpage.html", context={"request": request})
 
