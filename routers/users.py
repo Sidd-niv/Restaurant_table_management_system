@@ -9,14 +9,17 @@ from database_con import get_db
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 
+# This object will allow us to create the API
 router = APIRouter(tags=["User"])
 
+# Template object to access the html templates
 templates = Jinja2Templates(directory="templates/")
 router.mount("/static", StaticFiles(directory="static/"), name="static")
 
-
-@router.api_route("/register", response_class=HTMLResponse, status_code=status.HTTP_201_CREATED,
-                  methods=["GET", "POST"])
+# user_register API will return register page we get request is made.
+# After making a post request it will perform create operation on customer_login table to create new user but after
+# performing some validation
+@router.api_route("/register", response_class=HTMLResponse, status_code=status.HTTP_201_CREATED, methods=["GET", "POST"])
 async def user_register(request: Request, db: Session = Depends(get_db)):
     if request.method == "POST":
 
@@ -140,7 +143,7 @@ async def login(response: Response, request: Request, db: Session = Depends(get_
         # Request is get, therefore returning login page
         return templates.TemplateResponse("login_page.html", context={"request": request})
 
-
+# user_Dashbroad API will be use to register the user table booking order.
 @router.api_route("/user_Dashbroad", status_code=status.HTTP_409_CONFLICT, methods=["GET", "POST"])
 async def user_Dashbroad(response: Response, request: Request, db: Session = Depends(get_db)):
     if request.method == "POST":

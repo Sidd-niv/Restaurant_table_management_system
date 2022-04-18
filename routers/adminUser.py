@@ -20,7 +20,7 @@ templates = Jinja2Templates(directory="templates/")
 router.mount("/static", StaticFiles(directory="static/"), name="static")
 
 
-# Admin login generic API which accept only to request get and post
+# Admin login generic API which accept two request get and post
 # get request returns admin login html page
 # post request verify the admin credentials and return admin dashboard if it is a valid user
 @router.api_route("/admin_login", status_code=status.HTTP_409_CONFLICT, methods=["GET", "POST"])
@@ -128,7 +128,7 @@ async def admin_dashborad(request: Request, db: Session = Depends(get_db)):
                                           context={"request": request, "error": "please login"})
 
 
-# Billing api which will handle get and post request
+# Billing API will be use to handle the request from admin, i.e when admin wants to send the invoice via email in pdf format
 @router.api_route("/billing", status_code=status.HTTP_409_CONFLICT, methods=["GET", "POST"])
 async def billing(request: Request, db: Session = Depends(get_db)):
     # if the request is post then the user is sending the data, then this if condition will run
@@ -262,6 +262,7 @@ async def billing(request: Request, db: Session = Depends(get_db)):
         return templates.TemplateResponse("Adminpage.html", context={"request": request, "error": "please login"})
 
 
+# add_food_items API will perform create operation, i.e if admin want to add new food items to the restaurant menu.
 @router.api_route("/add_food_items", status_code=status.HTTP_409_CONFLICT, methods=["GET", "POST"])
 async def add_food_items(request: Request, db: Session = Depends(get_db)):
     # if user request is post then run below code
@@ -344,7 +345,8 @@ async def add_food_items(request: Request, db: Session = Depends(get_db)):
                                           )
 
 
-# This API is for update operation on food item table were admin is updating price ,food items with food_Id
+# This API is for update operation on food item table were admin can update the food menu i.e food item name and price
+# This API can update both item name and price together or if admin want to update single entity this API can also do that.
 @router.api_route("/update_food_items", status_code=status.HTTP_409_CONFLICT, methods=["GET", "POST"])
 async def update_food_items(request: Request, db: Session = Depends(get_db)):
     # if the request by admin is post then admin is performing update operation.
@@ -460,7 +462,7 @@ async def update_food_items(request: Request, db: Session = Depends(get_db)):
                                           , context={"request": request, "error": "Please login"},
                                           )
 
-
+# This API is used by Admin to perform delete operation on food item table by using primary key.
 @router.api_route("/delete_food_items", status_code=status.HTTP_200_OK, methods=["GET", "POST"])
 async def delete_food_items(request: Request, db: Session = Depends(get_db)):
     # if user request is post then below code will run
