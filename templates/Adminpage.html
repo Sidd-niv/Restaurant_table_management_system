@@ -17,7 +17,7 @@
     <p><strong>Welcome Admin </strong></p>
     <form action="admin_login" method="post">
         <label>Email ID
-            <input type="email"  name="email_id" placeholder="User Email ID" required>
+            <input type="email"  name="email_id" placeholder="User Email ID" pattern="^[a-z0-9]+[\._]?[a-z0-9]+[@]\w+[.]\w{2,3}$" required>
         </label>
         <label>Password
             <input type="password"  name="pwd" placeholder="password" required>
