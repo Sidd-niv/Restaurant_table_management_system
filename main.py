@@ -1,8 +1,8 @@
-from fastapi import FastAPI, status,  Request
+from fastapi import FastAPI, status, Request
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
-import models
-from database_con import engine
+from database_connections_and_orm_sechemas import models
+from database_connections_and_orm_sechemas import database_con
 from routers import users, adminUser
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -25,18 +25,15 @@ templates = Jinja2Templates(directory="templates/")
 app.mount("/static", StaticFiles(directory="static/"), name="static")
 
 # this will the uncreated tables which is going to be used in application
-models.Base.metadata.create_all(bind=engine)
+models.Base.metadata.create_all(bind=database_con.engine)
+
 
 # Default page api
 @app.get("/", status_code=status.HTTP_200_OK)
 def home(request: Request):
     return templates.TemplateResponse("Home_page.html", context={"request": request})
 
+
 # Through this fastapi instances will find the required routes
 app.include_router(users.router)
 app.include_router(adminUser.router)
-
-
-
-
-

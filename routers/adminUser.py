@@ -1,12 +1,11 @@
 from fastapi import Request, status, HTTPException, Depends, Response, APIRouter
-from pdf_generator import make_pdf
-from fastapi_mail_config import send_mail
+from mail_config_and_pdf_generator.pdf_generator import make_pdf
+from mail_config_and_pdf_generator.fastapi_mail_config import send_mail
 from sqlalchemy.orm import Session
-import oauth
-import utils
-import models
-from oauth import Token_Exception
-from database_con import get_db
+from pwd_hashing_and_jwt_token import oauth, utils
+from database_connections_and_orm_sechemas import models
+from pwd_hashing_and_jwt_token.oauth import Token_Exception
+from database_connections_and_orm_sechemas.database_con import get_db
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 
@@ -28,13 +27,13 @@ async def admin_login(request: Request, db: Session = Depends(get_db)):
     # If condition to decide the logic based on request
     if request.method == "POST":
         # Extracting the data from html form
-        form_data = await request.form()
-        email_id = form_data.get("email_id")  # Admin user name from html form.
-        pwd = form_data.get("pwd")  # Admin user password from html form.
+        html_form_data = await request.form()
+        admin_email_id = html_form_data.get("email_id")  # Admin user name from html form.
+        admin_pwd = html_form_data.get("pwd")  # Admin user password from html form.
 
         # Retrieving data from DB based on user input through HTML form
         user_data = db.query(models.Admin_login).filter(
-            models.Admin_login.user_Email_Id == email_id.strip()).first()
+            models.Admin_login.user_Email_Id == admin_email_id.strip()).first()
 
         # Verifying the user credential matches the user data from DB or not
         try:
@@ -45,11 +44,9 @@ async def admin_login(request: Request, db: Session = Depends(get_db)):
             return templates.TemplateResponse("Adminpage.html",
                                               context={"request": request, "error": "Invalid Email or User Not found"}
                                               )
-
         try:
-
             # If user password doesn't match with user input then rasie a exception and redirect user to login page with a message
-            if not utils.verify_pwd(pwd.strip(), user_data.user_Password):
+            if not utils.verify_pwd(admin_pwd.strip(), user_data.user_Password):
                 raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED)
         except HTTPException as h:
             return templates.TemplateResponse("Adminpage.html", status_code=h.status_code,
@@ -63,10 +60,8 @@ async def admin_login(request: Request, db: Session = Depends(get_db)):
         Customer_orders = db.query(models.Customer_login.user_Name, models.Restaurant_table.table_no_Id,
                                    models.User_Orders.food_item_desc, models.User_Orders.person_per_table,
                                    models.User_Orders.order_time, models.Customer_login.user_phone_number,
-                                   models.User_Orders.order_Id).join(models.User_Orders,
-                                                                     models.Customer_login.user_Id == models.User_Orders.user_Id).join(
-            models.Restaurant_table,
-            models.User_Orders.user_Id == models.Restaurant_table.user_Id_no)
+                                   models.User_Orders.order_Id).join(models.User_Orders,models.Customer_login.user_Id == models.User_Orders.user_Id).join(
+                                   models.Restaurant_table,models.User_Orders.user_Id == models.Restaurant_table.user_Id_no)
 
         # returning the result template in response
         response = templates.TemplateResponse("Adminpanelpage.html",
@@ -207,7 +202,7 @@ async def billing(request: Request, db: Session = Depends(get_db)):
                                               context={"request": request,
                                                        "msg": "Something went wrong contact developer"})
 
-        # removing the user booked table vlaue
+        # removing the user booked table value
         user_table_booking = db.query(models.Restaurant_table).filter(
             models.Restaurant_table.user_Id_no == user_order_data.user_Id).first()
 

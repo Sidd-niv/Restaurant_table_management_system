@@ -1,10 +1,9 @@
 from jose import JWTError, jwt
-import secrets
 from datetime import datetime, timedelta
 from fastapi import status, HTTPException
-import models
-from database_con import SessionLocal
-from schemas import Token_data, Token_access_data
+from database_connections_and_orm_sechemas import models
+from database_connections_and_orm_sechemas.database_con import SessionLocal
+from database_connections_and_orm_sechemas.schemas import Token_data, Token_access_data
 from config import setting
 
 # Object of SessionLocal

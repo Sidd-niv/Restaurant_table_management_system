@@ -5,7 +5,25 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3d4d9185-5d5b-4603-9f63-9cbdaf8be6a0" name="Changes" comment="deploy">
-      <change beforePath="$PROJECT_DIR$/database_con.py" beforeDir="false" afterPath="$PROJECT_DIR$/database_con.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/Restaurant_Table_Management_System.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Restaurant_Table_Management_System.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Invoice.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/Invoice.pdf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/alembic/env.py" beforeDir="false" afterPath="$PROJECT_DIR$/alembic/env.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database_con.py" beforeDir="false" afterPath="$PROJECT_DIR$/database_connections_and_orm_sechemas/database_con.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fastapi_mail_config.py" beforeDir="false" afterPath="$PROJECT_DIR$/mail_config_and_pdf_generator/fastapi_mail_config.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/database_connections_and_orm_sechemas/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/oauth.py" beforeDir="false" afterPath="$PROJECT_DIR$/pwd_hashing_and_jwt_token/oauth.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pdf_generator.py" beforeDir="false" afterPath="$PROJECT_DIR$/mail_config_and_pdf_generator/pdf_generator.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routers/adminUser.py" beforeDir="false" afterPath="$PROJECT_DIR$/routers/adminUser.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routers/users.py" beforeDir="false" afterPath="$PROJECT_DIR$/routers/users.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/schemas.py" beforeDir="false" afterPath="$PROJECT_DIR$/database_connections_and_orm_sechemas/schemas.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/Adminpanelpagecss.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/Adminpanelpagecss.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/Adminpage.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/Adminpage.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/pwd_hashing_and_jwt_token/utils.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/n" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -45,7 +63,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File" value="PLAIN_TEXT" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/venv/Scripts" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
@@ -57,12 +75,35 @@
       <recent name="D:\FYND Project\Restaurant_table_management_system" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\FYND Project\Restaurant_table_management_system\mail_config_and_pdf_generator" />
+      <recent name="D:\FYND Project\Restaurant_table_management_system\pwd_hashing_and_jwt_token" />
+      <recent name="D:\FYND Project\Restaurant_table_management_system\database_connections_and_orm_sechemas" />
       <recent name="D:\FYND Project\Restaurant_table_management_system" />
       <recent name="D:\FYND Project\Restaurant_table_management_system\templates" />
-      <recent name="D:\FYND Project\Restaurant_table_management_system\static" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.fastapi_mail_config">
+  <component name="RunManager" selected="Python.Interview">
+    <configuration name="Interview" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="Restaurant_Table_Management_System" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$USER_HOME$/Desktop" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$USER_HOME$/Desktop/Interview.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="fastapi_mail_config" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="Restaurant_Table_Management_System" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -75,7 +116,28 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/fastapi_mail_config.py" />
+      <option name="SCRIPT_NAME" value="D:\FYND Project\Restaurant_table_management_system\mail_config_and_pdf_generator\fastapi_mail_config.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="interviewperp2" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="Restaurant_Table_Management_System" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/interviewperp2.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -126,33 +188,13 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="pdf_generator" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="Restaurant_Table_Management_System" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/pdf_generator.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.Interview" />
+        <item itemvalue="Python.interviewperp2" />
         <item itemvalue="Python.logic" />
         <item itemvalue="Python.main" />
         <item itemvalue="Python.fastapi_mail_config" />
-        <item itemvalue="Python.pdf_generator" />
       </list>
     </recent_temporary>
   </component>
@@ -382,7 +424,35 @@
       <option name="project" value="LOCAL" />
       <updated>1649763584449</updated>
     </task>
-    <option name="localTasksCounter" value="32" />
+    <task id="LOCAL-00032" summary="deploy">
+      <created>1649926933778</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1649926933778</updated>
+    </task>
+    <task id="LOCAL-00033" summary="deploy">
+      <created>1650259552453</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1650259552453</updated>
+    </task>
+    <task id="LOCAL-00034" summary="deploy">
+      <created>1650263072556</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1650263072556</updated>
+    </task>
+    <task id="LOCAL-00035" summary="deploy">
+      <created>1650263831617</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1650263831617</updated>
+    </task>
+    <option name="localTasksCounter" value="36" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">

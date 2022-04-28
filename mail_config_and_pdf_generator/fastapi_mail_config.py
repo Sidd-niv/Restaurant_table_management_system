@@ -6,10 +6,10 @@ from config import setting
 def send_mail(customer_mail: str):
 
     # Defining sender email address string
-    Sender_Email = setting.sender_email
+    sender_email = setting.sender_email
 
     # Defining receiver email address string
-    Reciever_Email = customer_mail
+    reciever_email = customer_mail
 
     # Defining  email address password string
     # Password = "fynd@#2612"
@@ -20,8 +20,8 @@ def send_mail(customer_mail: str):
 
     # defining the content of email
     newMessage['Subject'] = "Hunger Fest Invoice"
-    newMessage['From'] = Sender_Email
-    newMessage['To'] = Reciever_Email
+    newMessage['From'] = sender_email
+    newMessage['To'] = reciever_email
     newMessage.set_content('Thank you for visiting us')
 
     # defining the file name
@@ -32,11 +32,11 @@ def send_mail(customer_mail: str):
         with open(file, 'rb') as f:
             file_data = f.read()
             file_name = f.name
-        newMessage.add_attachment(file_data, maintype='application', subtype='octet-stream', filename="Invoice.pdf")
+        newMessage.add_attachment(file_data, maintype='application', subtype='octet-stream', filename="../Invoice.pdf")
 
     # Sending email through smtplib
     with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp:
-        smtp.login(Sender_Email, Password)
+        smtp.login(sender_email, Password)
         smtp.send_message(newMessage)
 
 

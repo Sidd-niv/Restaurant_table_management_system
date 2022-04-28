@@ -1,6 +1,6 @@
 from sqlalchemy import Column, Integer, String, DATE, ForeignKey, TIMESTAMP, text, NUMERIC
 from sqlalchemy.orm import relationship
-from database_con import Base
+from database_connections_and_orm_sechemas.database_con import Base
 
 
 # ORM models to map the relational world schemas with OOP's world classes
@@ -20,7 +20,7 @@ class Customer_login(Base):
     created_at = Column(TIMESTAMP(timezone=True), nullable=False, server_default=text('now()'))
 
 
-    # one to many
+    # one to one
     customer_order = relationship("User_Orders", back_populates="order", cascade="all, delete",)
 
 
